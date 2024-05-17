@@ -2,12 +2,11 @@
 __pycache__/
 *.py[cod]
 
-# C extensions
-*.so
-
 # Distribution / packaging
 .Python
-env/
+.env
+.env.*
+!.env.template
 build/
 develop-eggs/
 dist/
@@ -22,9 +21,6 @@ var/
 *.egg
 .eggs/
 
-# Pycharm project files
-.idea/
-
 # PyTest cache
 .pytest_cache/
 
@@ -32,15 +28,9 @@ var/
 .coverage
 coverage.xml
 
-# Tox
-.tox/
-.cache/
-.python-version
-
 # VirtualEnv
 .venv/
 
-# Developers
-*.sw*
-manage.py
-.DS_Store
+# Sqlite
+*.sqlite
+*.sqlite3
