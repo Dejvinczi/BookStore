@@ -24,15 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY", default="bookstore-secret-key")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", default=True, cast=bool)
-
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
     default="127.0.0.1,localhost",
     cast=Csv(),
 )
-
 
 # Application definition
 
@@ -79,13 +75,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+print(config("DATABASE_HOST"))
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": config("DATABASE_NAME", default="bookstore_db"),
         "USER": config("DATABASE_USER", default="bookstore_user"),
         "PASSWORD": config("DATABASE_USER_PASSWORD", default="bookstore_user_password"),
-        "HOST": config("DATABASE_HOST", default="localhost"),
+        "HOST": config("DATABASE_HOST", default="127.0.0.1"),
         "PORT": config("DATABASE_PORT", default=5432, cast=int),
     }
 }
