@@ -2,5 +2,4 @@ from .base import *
 
 DEBUG = False
 
-LOCAL_INSTALLED_APPS = []
-INSTALLED_APPS = INSTALLED_APPS + LOCAL_INSTALLED_APPS
+ROOT_URLCONF = "config.urls.production"
