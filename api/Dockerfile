@@ -8,6 +8,7 @@ WORKDIR /api
 
 COPY /config /config
 COPY /apps /apps
+COPY /pyproject.toml /pyproject.toml
 COPY requirements/base.txt requirements/base.txt
 
 RUN pip install -r requirements/base.txt

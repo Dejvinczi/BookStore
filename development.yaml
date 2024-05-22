@@ -24,6 +24,7 @@ services:
       - ./api/requirements/base.txt:/api/requirements/base.txt
       - ./api/requirements/development.txt:/api/requirements/development.txt
       - ./api/scripts/dev-run.sh:/api/run.sh
+      - ./api/pyproject.toml:/api/pyproject.toml
     depends_on:
       - db
 
