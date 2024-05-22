@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Distribution / packaging
+.Python
+.env
+.env.*
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.eggs/
+
+# PyTest cache
+.pytest_cache/
+
+# Coverage
+.coverage
+coverage.xml
+
+# VirtualEnv
+.venv/
+
+# Sqlite
+*.sqlite
+*.sqlite3
+
+# Docs
+README.md
+
+# Docker
+Dockerfile
+.dockerignore
+deploy/
+
+# Git
+.git
+.gitignore

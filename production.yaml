@@ -1,0 +1,36 @@
+version: "3.9"
+name: "bookstore-prod"
+
+services:
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+      target: production
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
+    ports:
+      - "8000:8000"
+    restart: always
+
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_USER_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - prod-db-data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  prod-db-data:
