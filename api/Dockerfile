@@ -7,6 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 WORKDIR /api
 
 COPY /config /config
+COPY /apps /apps
 COPY requirements/base.txt requirements/base.txt
 
 RUN pip install -r requirements/base.txt

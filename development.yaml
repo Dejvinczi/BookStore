@@ -19,6 +19,7 @@ services:
       - "8000:8000"
     volumes:
       - ./api/config:/api/config
+      - ./api/apps:/api/apps
       - ./api/manage.py:/api/manage.py
       - ./api/requirements/base.txt:/api/requirements/base.txt
       - ./api/requirements/development.txt:/api/requirements/development.txt
