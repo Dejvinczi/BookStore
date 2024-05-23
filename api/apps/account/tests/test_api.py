@@ -3,6 +3,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
+from rest_framework_simplejwt.tokens import AccessToken
 
 
 @pytest.mark.django_db
@@ -25,6 +26,7 @@ class TestRegisterView:
         assert auth_user_model.objects.filter(username=payload["username"]).count() == 1
 
     def test_register_user_existing_username_fail(self, api_client, auth_user_model):
+        """Test that registering a user with an existing username fails and returns a 400 status code."""
         payload = {
             "username": "testuser",
             "password": "testpassword",
@@ -35,3 +37,52 @@ class TestRegisterView:
         response = api_client.post(self.REGISTER_URL, payload)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+@pytest.mark.django_db
+class TestLoginView:
+    """Tests for the login view."""
+
+    LOGIN_URL = reverse("account:login")
+
+    def test_login_user_success(self, api_client, auth_user_model):
+        """Test that a user can login successfully."""
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        user = auth_user_model.objects.create_user(**user_data)
+
+        payload = {
+            "username": user_data["username"],
+            "password": user_data["password"],
+        }
+
+        response = api_client.post(self.LOGIN_URL, payload)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert "access" in response.data
+        assert "refresh" in response.data
+
+        access_token_obj = AccessToken(response.data["access"])
+
+        assert access_token_obj["user_id"] == user.id
+
+    def test_login_user_invalid_credentials_fail(self, api_client, auth_user_model):
+        """Test that logging in with invalid credentials fails and returns a 401 status code."""
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        auth_user_model.objects.create_user(**user_data)
+
+        payload = {
+            "username": user_data["username"],
+            "password": "invalidpassword",
+        }
+
+        response = api_client.post(self.LOGIN_URL, payload)
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
