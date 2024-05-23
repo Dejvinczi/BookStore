@@ -6,6 +6,7 @@ addopts = "--cov=. --cov-report=term-missing"
 [tool.coverage.run]
 omit = [
     "manage.py",
+    "conftest.py",
     "config/*",
     "*/migrations/*",
     "*/tests/*",
