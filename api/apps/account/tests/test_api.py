@@ -3,7 +3,7 @@
 import pytest
 from django.urls import reverse
 from rest_framework import status
-from rest_framework_simplejwt.tokens import AccessToken
+from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 
 @pytest.mark.django_db
@@ -86,3 +86,31 @@ class TestLoginView:
         response = api_client.post(self.LOGIN_URL, payload)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+class TestLoginRefreshView:
+    """Tests for the login (token) refresh view."""
+
+    LOGIN_REFRESH_URL = reverse("account:login-refresh")
+
+    def test_login_refresh_user_success(self, api_client, auth_user_model):
+        """Test that a user can refresh their token."""
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        user = auth_user_model.objects.create_user(**user_data)
+        refresh_token = RefreshToken.for_user(user)
+
+        payload = {"refresh": str(refresh_token)}
+
+        response = api_client.post(self.LOGIN_REFRESH_URL, payload)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert "access" in response.data
+
+        access_token_obj = AccessToken(response.data["access"])
+
+        assert access_token_obj["user_id"] == user.id
