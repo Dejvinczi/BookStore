@@ -1,6 +1,9 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.serializers import (
+    TokenObtainPairSerializer,
+    TokenRefreshSerializer,
+)
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -19,5 +22,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class LoginSerializer(TokenObtainPairSerializer):
     """Serializer for user login."""
+
+    pass
+
+
+class LoginRefreshSerializer(TokenRefreshSerializer):
+    """Serializer for user login refresh."""
 
     pass
