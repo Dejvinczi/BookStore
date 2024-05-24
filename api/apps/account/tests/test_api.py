@@ -114,3 +114,11 @@ class TestLoginRefreshView:
         access_token_obj = AccessToken(response.data["access"])
 
         assert access_token_obj["user_id"] == user.id
+
+    def test_login_refresh_user_invalid_token_fail(self, api_client, auth_user_model):
+        """Test that logging in with an invalid token fails and returns a 401 status code."""
+        payload = {"refresh": "invalidtoken"}
+
+        response = api_client.post(self.LOGIN_REFRESH_URL, payload)
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
