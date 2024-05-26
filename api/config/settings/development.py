@@ -3,6 +3,7 @@ from .base import *
 INSTALLED_APPS += [
     "django_extensions",
     "debug_toolbar",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE += [
@@ -14,3 +15,12 @@ INTERNAL_IPS += [
 ]
 
 ROOT_URLCONF = "config.urls.development"
+
+REST_FRAMEWORK.update({"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema"})
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Book Store API",
+    "DESCRIPTION": "Simple API for book store.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
