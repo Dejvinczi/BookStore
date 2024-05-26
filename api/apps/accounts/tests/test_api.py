@@ -10,7 +10,7 @@ from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 class TestRegisterView:
     """Tests for the register view."""
 
-    REGISTER_URL = reverse("account:register")
+    REGISTER_URL = reverse("accounts:register")
 
     def test_register_user_success(self, api_client, auth_user_model):
         """Test that a new user can be registered successfully."""
@@ -43,7 +43,7 @@ class TestRegisterView:
 class TestLoginView:
     """Tests for the login view."""
 
-    LOGIN_URL = reverse("account:login")
+    LOGIN_URL = reverse("accounts:login")
 
     def test_login_user_success(self, api_client, auth_user_model):
         """Test that a user can login successfully."""
@@ -92,7 +92,7 @@ class TestLoginView:
 class TestLoginRefreshView:
     """Tests for the login (token) refresh view."""
 
-    LOGIN_REFRESH_URL = reverse("account:login-refresh")
+    LOGIN_REFRESH_URL = reverse("accounts:login-refresh")
 
     def test_login_refresh_user_success(self, api_client, auth_user_model):
         """Test that a user can refresh their token."""
