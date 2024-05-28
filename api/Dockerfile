@@ -9,6 +9,7 @@ WORKDIR /api
 COPY /config /config
 COPY /apps /apps
 COPY /pyproject.toml /pyproject.toml
+COPY /.flake8 /.flake8
 COPY /conftest.py /conftest.py
 COPY requirements/base.txt requirements/base.txt
 

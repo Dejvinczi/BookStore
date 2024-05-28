@@ -25,6 +25,7 @@ services:
       - ./api/requirements/development.txt:/api/requirements/development.txt
       - ./api/scripts/dev-run.sh:/api/run.sh
       - ./api/pyproject.toml:/api/pyproject.toml
+      - ./api/.flake8:/api/.flake8
       - ./api/conftest.py:/api/conftest.py
     depends_on:
       - db
