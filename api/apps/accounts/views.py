@@ -1,6 +1,14 @@
-from rest_framework import generics, permissions
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from .serializers import RegisterSerializer, LoginSerializer, LoginRefreshSerializer
+from rest_framework import generics, permissions, views, response
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenBlacklistView,
+)
+from .serializers import (
+    RegisterSerializer,
+    LoginSerializer,
+    LoginRefreshSerializer,
+)
 
 
 class RegisterView(generics.CreateAPIView):
@@ -18,3 +26,7 @@ class LoginView(TokenObtainPairView):
 
 class LoginRefreshView(TokenRefreshView):
     serializer_class = LoginRefreshSerializer
+
+
+class LogoutView(TokenBlacklistView):
+    pass
