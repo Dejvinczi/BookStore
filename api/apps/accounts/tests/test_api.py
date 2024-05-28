@@ -122,3 +122,42 @@ class TestLoginRefreshView:
         response = api_client.post(self.LOGIN_REFRESH_URL, payload)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+class TestLogoutView:
+
+    LOGOUT_URL = reverse("accounts:logout")
+
+    def test_logout_success(self, api_client, auth_user_model):
+        """Test that a user can logout successfully."""
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        user = auth_user_model.objects.create_user(**user_data)
+        refresh_token = RefreshToken.for_user(user)
+
+        payload = {"refresh": str(refresh_token)}
+
+        response = api_client.post(self.LOGOUT_URL, payload)
+
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_logout_with_blacklisted_token_fail(self, api_client, auth_user_model):
+        """Test that logging out with a blacklisted token fails and returns a 401 status code."""
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        user = auth_user_model.objects.create_user(**user_data)
+        refresh_token = RefreshToken.for_user(user)
+        refresh_token.blacklist()
+
+        payload = {"refresh": str(refresh_token)}
+
+        response = api_client.post(self.LOGOUT_URL, payload)
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
