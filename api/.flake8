@@ -5,6 +5,7 @@ exclude =
     *.pot,
     *.py[co],
     __pycache__,
+    migrations,
     venv,
     .env
 ignore =
