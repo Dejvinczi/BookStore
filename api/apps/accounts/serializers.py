@@ -30,3 +30,13 @@ class LoginRefreshSerializer(TokenRefreshSerializer):
     """Serializer for user login refresh."""
 
     pass
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """Serializer for user profile."""
+
+    date_joined = serializers.DateTimeField(read_only=True, format="%Y-%m-%d %H:%M:%S")
+
+    class Meta:
+        model = get_user_model()
+        fields = ("username", "email", "date_joined")
