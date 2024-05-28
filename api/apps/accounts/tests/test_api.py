@@ -161,3 +161,60 @@ class TestLogoutView:
         response = api_client.post(self.LOGOUT_URL, payload)
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+
+@pytest.mark.django_db
+class TestProfileView:
+    """Tests for the user profile view."""
+
+    PROFILE_URL = reverse("accounts:profile")
+
+    @pytest.fixture()
+    def user(self, auth_user_model):
+        user_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+        }
+        user = auth_user_model.objects.create_user(**user_data)
+        return user
+
+    def test_get_profile_unauthorized_fail(self, api_client):
+        """Test that getting the user profile fails and returns a 401 status code."""
+        response = api_client.get(self.PROFILE_URL)
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_update_profile_unauthorized_fail(self, api_client):
+        """Test that updating the user profile fails and returns a 401 status code."""
+        response = api_client.put(self.PROFILE_URL)
+
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
+
+    def test_get_profile_success(self, api_client, user):
+        """Test that a user can get their profile."""
+        api_client.force_authenticate(user)
+
+        response = api_client.get(self.PROFILE_URL)
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["username"] == user.username
+        assert response.data["email"] == user.email
+
+    def test_update_profile_success(self, api_client, user):
+        """Test that a user can update their profile."""
+        api_client.force_authenticate(user)
+
+        payload = {
+            "username": "newusername",
+            "email": "newuser@example.com",
+        }
+
+        response = api_client.put(self.PROFILE_URL, payload)
+        user.refresh_from_db()
+
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["username"] == payload["username"]
+        assert response.data["email"] == payload["email"]
+        assert user.username == payload["username"]
+        assert user.email == payload["email"]
