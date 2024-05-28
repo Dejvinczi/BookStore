@@ -1,4 +1,4 @@
-from .base import *
+from .base import *  # NOQA
 
 INSTALLED_APPS += [
     "django_extensions",
