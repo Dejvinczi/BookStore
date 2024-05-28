@@ -13,3 +13,21 @@ omit = [
     "*/test_*.py",
     "*_tests.py"
 ]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | migrations
+  | build
+  | dist
+)/
+'''
