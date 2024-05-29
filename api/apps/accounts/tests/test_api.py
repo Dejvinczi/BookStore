@@ -20,7 +20,7 @@ class TestRegisterView:
             "email": "testuser@example.com",
         }
 
-        response = api_client.post(self.REGISTER_URL, payload)
+        response = api_client.post(self.REGISTER_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_201_CREATED
         assert auth_user_model.objects.filter(username=payload["username"]).count() == 1
@@ -34,7 +34,7 @@ class TestRegisterView:
         }
         auth_user_model.objects.create_user(**payload)
 
-        response = api_client.post(self.REGISTER_URL, payload)
+        response = api_client.post(self.REGISTER_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
@@ -59,7 +59,7 @@ class TestLoginView:
             "password": user_data["password"],
         }
 
-        response = api_client.post(self.LOGIN_URL, payload)
+        response = api_client.post(self.LOGIN_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert "access" in response.data
@@ -83,7 +83,7 @@ class TestLoginView:
             "password": "invalidpassword",
         }
 
-        response = api_client.post(self.LOGIN_URL, payload)
+        response = api_client.post(self.LOGIN_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -106,7 +106,7 @@ class TestLoginRefreshView:
 
         payload = {"refresh": str(refresh_token)}
 
-        response = api_client.post(self.LOGIN_REFRESH_URL, payload)
+        response = api_client.post(self.LOGIN_REFRESH_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert "access" in response.data
@@ -119,7 +119,7 @@ class TestLoginRefreshView:
         """Test that logging in with an invalid token fails and returns a 401 status code."""
         payload = {"refresh": "invalidtoken"}
 
-        response = api_client.post(self.LOGIN_REFRESH_URL, payload)
+        response = api_client.post(self.LOGIN_REFRESH_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -141,7 +141,7 @@ class TestLogoutView:
 
         payload = {"refresh": str(refresh_token)}
 
-        response = api_client.post(self.LOGOUT_URL, payload)
+        response = api_client.post(self.LOGOUT_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_200_OK
 
@@ -158,7 +158,7 @@ class TestLogoutView:
 
         payload = {"refresh": str(refresh_token)}
 
-        response = api_client.post(self.LOGOUT_URL, payload)
+        response = api_client.post(self.LOGOUT_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -181,13 +181,13 @@ class TestProfileView:
 
     def test_get_profile_unauthorized_fail(self, api_client):
         """Test that getting the user profile fails and returns a 401 status code."""
-        response = api_client.get(self.PROFILE_URL)
+        response = api_client.get(self.PROFILE_URL, format="json")
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
     def test_update_profile_unauthorized_fail(self, api_client):
         """Test that updating the user profile fails and returns a 401 status code."""
-        response = api_client.put(self.PROFILE_URL)
+        response = api_client.put(self.PROFILE_URL, format="json")
 
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
@@ -195,7 +195,7 @@ class TestProfileView:
         """Test that a user can get their profile."""
         api_client.force_authenticate(user)
 
-        response = api_client.get(self.PROFILE_URL)
+        response = api_client.get(self.PROFILE_URL, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert response.data["username"] == user.username
@@ -210,7 +210,7 @@ class TestProfileView:
             "email": "newuser@example.com",
         }
 
-        response = api_client.put(self.PROFILE_URL, payload)
+        response = api_client.put(self.PROFILE_URL, payload, format="json")
         user.refresh_from_db()
 
         assert response.status_code == status.HTTP_200_OK
