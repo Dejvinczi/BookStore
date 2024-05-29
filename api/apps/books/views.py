@@ -8,4 +8,12 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-    permission_classes = (permissions.IsAdminUser,)
+
+    def get_permissions(self):
+        match self.action:
+            case "list" | "retrieve":
+                self.permission_classes = (permissions.AllowAny,)
+            case _:
+                self.permission_classes = (permissions.IsAdminUser,)
+
+        return super().get_permissions()
