@@ -6,18 +6,6 @@ from ..models import Author, Genre
 class TestAuthorModel:
     """Tests for the Author model in the system."""
 
-    @pytest.fixture
-    def author_data(self):
-        return {
-            "first_name": "testfirstname",
-            "last_name": "testlastname",
-            "date_of_birth": "1990-01-01",
-        }
-
-    @pytest.fixture
-    def author(self, author_data):
-        return Author.objects.create(**author_data)
-
     def test_create_author(self, author_data):
         """Test that the Author model can be created."""
         author = Author.objects.create(**author_data)
@@ -34,14 +22,6 @@ class TestAuthorModel:
 @pytest.mark.django_db
 class TestGenreModel:
     """Tests for the Genre model in the system."""
-
-    @pytest.fixture
-    def genre_data(self):
-        return {"name": "Test Genre"}
-
-    @pytest.fixture
-    def genre(self, genre_data):
-        return Genre.objects.create(**genre_data)
 
     def test_create_genre(self, genre_data):
         """Test that the Genre model can be created."""
