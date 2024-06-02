@@ -1,5 +1,5 @@
 import pytest
-from ..models import Author, Genre
+from ..models import Author, Genre, Book
 
 
 @pytest.fixture
@@ -42,3 +42,28 @@ def genre(genre_data):
     :return: Genre
     """
     return Genre.objects.create(**genre_data)
+
+
+@pytest.fixture
+def book_data():
+    """
+    Fixture to provide book data
+    :param author: Author
+    :param genre: Genre
+    :return: dict
+    """
+    return {
+        "title": "Test Book",
+        "description": "Test Description",
+        "publication_date": "2020-01-01",
+    }
+
+
+@pytest.fixture
+def book(book_data):
+    """
+    Fixture to provide a book instance
+    :param book_data: dict
+    :return: Book
+    """
+    return Book.objects.create(**book_data)
