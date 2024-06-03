@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
