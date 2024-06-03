@@ -4,6 +4,7 @@ from . import views
 
 router = DefaultRouter()
 router.register("authors", views.AuthorViewSet, basename="author")
+router.register("genres", views.GenreViewSet, basename="genre")
 
 app_name = "books"
 
