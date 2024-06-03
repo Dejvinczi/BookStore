@@ -16,27 +16,24 @@ class RegisterView(generics.CreateAPIView):
     """View for user registration."""
 
     serializer_class = RegisterSerializer
-    permission_classes = [permissions.AllowAny]
+    authentication_classes = []
+    permission_classes = []
 
 
 class LoginView(TokenObtainPairView):
     """View for user login."""
 
     serializer_class = LoginSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class LoginRefreshView(TokenRefreshView):
     """View for user login refresh."""
 
     serializer_class = LoginRefreshSerializer
-    permission_classes = [permissions.AllowAny]
 
 
 class LogoutView(TokenBlacklistView):
     """View for user logout (blacklist token refresh)."""
-
-    permission_classes = [permissions.AllowAny]
 
     pass
 
