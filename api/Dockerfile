@@ -17,7 +17,7 @@ RUN pip install -r requirements/base.txt
 
 EXPOSE 8000
 
-# ENTRYPOINT ["bash"]
+ENTRYPOINT ["bash"]
 
 
 ####################### DEVELOPMENT ##############################
@@ -31,6 +31,8 @@ RUN pip install -r requirements/development.txt
 
 COPY scripts/dev-run.sh ./run.sh
 RUN chmod +x ./run.sh
+
+EXPOSE 5678
 
 ENTRYPOINT ["./run.sh"]
 
