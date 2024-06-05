@@ -1,5 +1,5 @@
-from rest_framework import viewsets, permissions
-from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework import viewsets
+from ..core.permissions import IsAdminOrReadOnly
 from .models import Author, Genre
 from .serializers import AuthorSerializer, GenreSerializer
 
@@ -9,17 +9,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
-
-    def get_authenticators(self):
-        if self.request is None or self.request.method in permissions.SAFE_METHODS:
-            return []
-        return [JWTAuthentication()]
-
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.AllowAny()]
-
-        return [permissions.IsAdminUser()]
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -27,14 +17,4 @@ class GenreViewSet(viewsets.ModelViewSet):
 
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-
-    def get_authenticators(self):
-        if self.request is None or self.request.method in permissions.SAFE_METHODS:
-            return []
-        return [JWTAuthentication()]
-
-    def get_permissions(self):
-        if self.request.method in permissions.SAFE_METHODS:
-            return [permissions.AllowAny()]
-
-        return [permissions.IsAdminUser()]
+    permission_classes = [IsAdminOrReadOnly]
