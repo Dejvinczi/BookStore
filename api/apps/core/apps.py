@@ -1,3 +1,4 @@
+from .scheme import *
 from django.apps import AppConfig
 
 
