@@ -1,9 +1,6 @@
 from drf_spectacular.extensions import OpenApiSerializerFieldExtension
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import Direction
 from .serializers import NestedPrimaryKeyRelatedField
-
-DEFAULT_PRIMARY_KEY = OpenApiTypes.INT
 
 
 class NestedPrimaryKeyRelatedFieldExtension(OpenApiSerializerFieldExtension):
