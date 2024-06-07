@@ -1,4 +1,5 @@
 from django.db import models
+from ..core import validators
 
 
 class Author(models.Model):
@@ -6,7 +7,7 @@ class Author(models.Model):
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(validators=[validators.date_cannot_be_in_future])
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -26,7 +27,9 @@ class Book(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    publication_date = models.DateField()
+    publication_date = models.DateField(
+        validators=[validators.date_cannot_be_in_future]
+    )
     authors = models.ManyToManyField(Author, related_name="books")
     genres = models.ManyToManyField(Genre, related_name="books")
 
