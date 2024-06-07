@@ -1,7 +1,12 @@
 from rest_framework import viewsets
 from ..core.permissions import IsAdminOrReadOnly
-from .models import Author, Genre
-from .serializers import AuthorSerializer, GenreSerializer
+from .models import Author, Genre, Book
+from .serializers import (
+    AuthorSerializer,
+    GenreSerializer,
+    BookSerializer,
+    BookDetailSerializer,
+)
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
@@ -18,3 +23,18 @@ class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = [IsAdminOrReadOnly]
+
+
+class BookViewSet(viewsets.ModelViewSet):
+    """ViewSet for the Book model."""
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    detail_serializer_class = BookDetailSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+    def get_serializer_class(self):
+        """Get serializer class based on action."""
+        if self.action == "list":
+            return self.serializer_class
+        return self.detail_serializer_class
