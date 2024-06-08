@@ -22,3 +22,18 @@ def book_data():
 register(AuthorFactory)
 register(GenreFactory)
 register(BookFactory)
+
+
+@pytest.fixture
+def author_factory():
+    return AuthorFactory
+
+
+@pytest.fixture
+def genre_factory():
+    return GenreFactory
+
+
+@pytest.fixture
+def book_factory():
+    return BookFactory
