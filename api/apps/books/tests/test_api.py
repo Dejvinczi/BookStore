@@ -151,3 +151,97 @@ class TestGenreViewSet:
         """Test that a genre can be deleted for users that are admin."""
         response = admin_api_client.delete(self._get_book_detail_url(genre.id))
         assert response.status_code == status.HTTP_204_NO_CONTENT
+
+
+@pytest.mark.django_db
+class TestBookViewSet:
+    """Tests for the BookViewSet."""
+
+    BOOK_LIST_URL = reverse("books:book-list")
+
+    def _get_book_detail_url(self, id):
+        return reverse("books:book-detail", args=[id])
+
+    def test_list_sucess(self, api_client):
+        """Test that the list of books can be retrieved."""
+        response = api_client.get(self.BOOK_LIST_URL)
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_retrieve_sucess(self, api_client, book):
+        """Test that a book can be retrieved."""
+        response = api_client.get(self._get_book_detail_url(book.id))
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_create_not_as_admin_fail(self, auth_api_client):
+        """Test that a book can't be created for users that are not admin."""
+        response = auth_api_client.post(self.BOOK_LIST_URL, {})
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_update_not_as_admin_fail(self, auth_api_client, book):
+        """Test that a book can't be updated for users that are not admin."""
+        response = auth_api_client.put(
+            self._get_book_detail_url(book.id), {}, format="json"
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_part_update_not_as_admin_fail(self, auth_api_client, book):
+        """Test that a book can't be partially updated for users that are not admin."""
+        response = auth_api_client.patch(
+            self._get_book_detail_url(book.id), {}, format="json"
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_delete_not_as_admin_fail(self, auth_api_client, book):
+        """Test that a book can't be deleted for users that are not admin."""
+        response = auth_api_client.delete(self._get_book_detail_url(book.id))
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
+    def test_create_as_admin_success(
+        self,
+        admin_api_client,
+        author_factory,
+        genre_factory,
+    ):
+        """Test that a book can be created for users that are admin."""
+        authors = author_factory.create_batch(2)
+        genres = genre_factory.create_batch(2)
+        authors_ids = [author.id for author in authors]
+        genres_ids = [genre.id for genre in genres]
+
+        payload = {
+            "title": "Test",
+            "publication_date": "2000-01-01",
+            "authors": authors_ids,
+            "genres": genres_ids,
+        }
+        response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
+        assert response.status_code == status.HTTP_201_CREATED
+
+    def test_update_as_admin_success(self, admin_api_client, book):
+        """Test that a book can be updated for users that are admin."""
+        payload = {
+            "title": "NewName",
+            "publication_date": "2000-01-01",
+            "authors": [],
+            "genres": [],
+        }
+        response = admin_api_client.put(
+            self._get_book_detail_url(book.id), payload, format="json"
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_part_update_as_admin_success(self, admin_api_client, book):
+        """Test that a book can be partially updated for users that are admin."""
+        payload = {
+            "title": "NewName",
+            "publication_date": "2000-01-01",
+        }
+        response = admin_api_client.patch(
+            self._get_book_detail_url(book.id), payload, format="json"
+        )
+        assert response.status_code == status.HTTP_200_OK
+
+    def test_delete_as_admin_success(self, admin_api_client, book):
+        """Test that a book can be deleted for users that are admin."""
+        response = admin_api_client.delete(self._get_book_detail_url(book.id))
+        assert response.status_code == status.HTTP_204_NO_CONTENT
