@@ -9,14 +9,15 @@ services:
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-      - DATABASE_HOST=db
-      - DATABASE_PORT=5432
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
       - PYDEVD_DISABLE_FILE_VALIDATION=1
     ports:
-      - "8000:8000"
+      - "${API_PORT}:8000"
       - "5678:5678"
     volumes:
       - ./api/config:/api/config
@@ -34,11 +35,11 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      - POSTGRES_DB=${DATABASE_NAME}
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_USER_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_USER_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - dev-db-data:/var/lib/postgresql/data
 
@@ -46,8 +47,10 @@ services:
     build:
       context: app
       dockerfile: Dockerfile
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     ports:
-      - "3000:3000"
+      - "${APP_PORT}:3000"
     volumes:
       - ./app:/app
       - /app/node_modules
