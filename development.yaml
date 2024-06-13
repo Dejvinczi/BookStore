@@ -17,7 +17,7 @@ services:
       - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
       - PYDEVD_DISABLE_FILE_VALIDATION=1
     ports:
-      - "${API_PORT}:8000"
+      - "8000:8000"
       - "5678:5678"
     volumes:
       - ./api/config:/api/config
@@ -39,7 +39,7 @@ services:
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_USER_PASSWORD}
     ports:
-      - "${DB_PORT}:5432"
+      - "5432:5432"
     volumes:
       - dev-db-data:/var/lib/postgresql/data
 
@@ -50,7 +50,7 @@ services:
     environment:
       - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
     ports:
-      - "${APP_PORT}:3000"
+      - "3000:3000"
     volumes:
       - ./app:/app
       - /app/node_modules
