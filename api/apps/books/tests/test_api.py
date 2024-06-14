@@ -17,6 +17,14 @@ class TestAuthorViewSet:
         response = api_client.get(self.AUTHOR_LIST_URL)
         assert response.status_code == status.HTTP_200_OK
 
+    def test_list_success_paginated(self, api_client, author_factory):
+        """Test that the list of authors can be retrieved with pagination."""
+        author_factory.create_batch(5)
+        response = api_client.get(f"{self.AUTHOR_LIST_URL}?limit=1")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 5
+        assert len(response.data["results"]) == 1
+
     def test_retrieve_sucess(self, api_client, author):
         """Test that an author can be retrieved."""
         response = api_client.get(self._get_book_detail_url(author.id))
@@ -96,6 +104,14 @@ class TestGenreViewSet:
         response = api_client.get(self.GENRE_LIST_URL)
         assert response.status_code == status.HTTP_200_OK
 
+    def test_list_success_paginated(self, api_client, genre_factory):
+        """Test that the list of genres can be retrieved with pagination."""
+        genre_factory.create_batch(5)
+        response = api_client.get(f"{self.GENRE_LIST_URL}?limit=1")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 5
+        assert len(response.data["results"]) == 1
+
     def test_retrieve_sucess(self, api_client, genre):
         """Test that a genre can be retrieved."""
         response = api_client.get(self._get_book_detail_url(genre.id))
@@ -166,6 +182,14 @@ class TestBookViewSet:
         """Test that the list of books can be retrieved."""
         response = api_client.get(self.BOOK_LIST_URL)
         assert response.status_code == status.HTTP_200_OK
+
+    def test_list_success_paginated(self, api_client, book_factory):
+        """Test that the list of books can be retrieved with pagination."""
+        book_factory.create_batch(5)
+        response = api_client.get(f"{self.BOOK_LIST_URL}?limit=1")
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 5
+        assert len(response.data["results"]) == 1
 
     def test_retrieve_sucess(self, api_client, book):
         """Test that a book can be retrieved."""
