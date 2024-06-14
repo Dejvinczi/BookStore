@@ -169,6 +169,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
     ],
+    "DEFAULT_PAGINATION_CLASS": "apps.core.pagination.CustomLimitOffsetPagination",
 }
 
 APPEND_SLASH = False
