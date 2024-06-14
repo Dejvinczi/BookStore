@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..core.serializers import NestedPrimaryKeyRelatedField
+from apps.core.serializers import NestedPrimaryKeyRelatedField
 from .models import Author, Genre, Book
 
 

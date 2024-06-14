@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from ..core.permissions import IsAdminOrReadOnly
+from apps.core.permissions import IsAdminOrReadOnly
 from .models import Author, Genre, Book
 from .serializers import (
     AuthorSerializer,

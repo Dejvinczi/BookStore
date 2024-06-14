@@ -1,5 +1,5 @@
 from django.db import models
-from ..core import validators
+from apps.core import validators
 
 
 class Author(models.Model):
