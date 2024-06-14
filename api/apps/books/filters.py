@@ -21,11 +21,7 @@ class AuthorFilter(drf_filters.FilterSet):
         help_text="Filter by date of birth (range). Format: YYYY-MM-DD",
     )
     ordering = drf_filters.OrderingFilter(
-        fields=[
-            ("first_name", "First Name"),
-            ("last_name", "Last Name"),
-            ("date_of_birth", "Date of Birth"),
-        ],
+        fields=["first_name", "last_name", "date_of_birth"],
         field_labels={
             "first_name": "First Name",
             "last_name": "Last Name",
