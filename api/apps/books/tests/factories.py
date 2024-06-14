@@ -1,29 +1,27 @@
-from factory import Faker
-from factory.django import DjangoModelFactory
-
+import factory
 from ..models import Author, Genre, Book
 
 
-class AuthorFactory(DjangoModelFactory):
+class AuthorFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Author
 
-    first_name = Faker("first_name")
-    last_name = Faker("last_name")
-    date_of_birth = Faker("date_of_birth")
+    first_name = factory.Faker("first_name")
+    last_name = factory.Faker("last_name")
+    date_of_birth = factory.Faker("date_of_birth")
 
 
-class GenreFactory(DjangoModelFactory):
+class GenreFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Genre
 
-    name = Faker("word")
+    name = factory.Sequence(lambda n: f"Genre {n}")
 
 
-class BookFactory(DjangoModelFactory):
+class BookFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Book
 
-    title = Faker("sentence", nb_words=4)
-    description = Faker("paragraph", nb_sentences=3)
-    publication_date = Faker("date")
+    title = factory.Sequence(lambda n: f"Book {n}")
+    description = factory.Faker("paragraph", nb_sentences=3)
+    publication_date = factory.Faker("date")
