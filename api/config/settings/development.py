@@ -14,6 +14,9 @@ INTERNAL_IPS += [
     "127.0.0.1",
 ]
 
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+}
 ROOT_URLCONF = "config.urls.development"
 
 REST_FRAMEWORK.update(
