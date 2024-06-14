@@ -1,4 +1,4 @@
-from .scheme import *
+from .scheme import *  # NOQA
 from django.apps import AppConfig
 
 
