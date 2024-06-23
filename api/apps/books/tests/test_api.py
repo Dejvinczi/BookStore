@@ -30,12 +30,14 @@ class TestAuthorViewSet:
 
     def test_list_with_filter_first_name_success(self, api_client, author_factory):
         """Test that the list of authors can be filtered by first name."""
-        authors = author_factory.create_batch(5)
-        first_author = authors[0]
+        author_factory.create_batch(5)
+        filter_author = author_factory(first_name="Non-ExstiningName")
+
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
-            {"first_name": first_author.first_name},
+            {"first_name": filter_author.first_name},
         )
+
         assert response.status_code == status.HTTP_200_OK
         assert response.data["count"] == 1
         assert len(response.data["results"]) == 1
@@ -286,6 +288,9 @@ class TestBookViewSet:
 
     def _get_book_detail_url(self, id):
         return reverse("books:book-detail", args=[id])
+
+    def _get_book_upload_image_url(self, id):
+        return reverse("books:book-upload-image", args=[id])
 
     def test_list_success(self, api_client):
         """Test that the list of books can be retrieved."""
