@@ -1,4 +1,5 @@
 from rest_framework import viewsets, response, status
+from rest_framework.parsers import MultiPartParser
 from rest_framework.decorators import action
 from apps.core.permissions import IsAdminOrReadOnly
 from .models import Author, Genre, Book
@@ -35,6 +36,7 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     detail_serializer_class = BookDetailSerializer
+    upload_image_serializer_class = BookUploadImageSerializer
     permission_classes = [IsAdminOrReadOnly]
 
     def get_serializer_class(self):
@@ -42,14 +44,14 @@ class BookViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             return self.serializer_class
         if self.action == "upload_image":
-            return BookUploadImageSerializer
+            return self.upload_image_serializer_class
         return self.detail_serializer_class
 
     @action(
         detail=True,
         methods=["put"],
         url_path="upload-image",
-        serializer_class=BookUploadImageSerializer,
+        parser_classes=[MultiPartParser],
     )
     def upload_image(self, request, *args, **kwargs):
         """Upload an image to the Book model."""
