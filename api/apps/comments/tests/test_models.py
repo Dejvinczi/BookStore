@@ -1,5 +1,4 @@
 import pytest
-from django.utils import timezone
 from apps.books.tests.factories import BookFactory
 from ..models import Comment
 
