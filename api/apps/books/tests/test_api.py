@@ -74,7 +74,7 @@ class TestAuthorViewSet:
     def test_list_with_ordering_by_first_name_success(self, api_client, author_factory):
         """Test that the list of authors can be ordered by first name."""
         authors = author_factory.create_batch(5)
-        ordered_authors = sorted(authors, key=lambda author: author.first_name)
+        ordered_authors = sorted(authors, key=lambda author: author.first_name.lower())
 
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
@@ -93,21 +93,25 @@ class TestAuthorViewSet:
     def test_list_with_ordering_by_last_name_success(self, api_client, author_factory):
         """Test that the list of authors can be ordered by last name."""
         authors = author_factory.create_batch(5)
-        ordered_authors = sorted(authors, key=lambda author: author.last_name)
+        ordered_authors = sorted(authors, key=lambda author: author.last_name.lower())
 
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
             {"ordering": "last_name"},
         )
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["results"][0]["id"] == ordered_authors[0].id
+        assert [author["id"] for author in response.data["results"]] == [
+            author.id for author in ordered_authors
+        ]
 
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
             {"ordering": "-last_name"},
         )
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["results"][-1]["id"] == ordered_authors[0].id
+        assert [author["id"] for author in response.data["results"]] == [
+            author.id for author in reversed(ordered_authors)
+        ]
 
     def test_list_with_ordering_by_date_of_birth_success(
         self, api_client, author_factory
@@ -346,14 +350,21 @@ class TestBookViewSet:
         response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
         assert response.status_code == status.HTTP_201_CREATED
 
-    def test_update_as_admin_success(self, admin_api_client, book):
+    def test_update_as_admin_success(
+        self, admin_api_client, book, author_factory, genre_factory
+    ):
         """Test that a book can be updated for users that are admin."""
+        authors = author_factory.create_batch(2)
+        genres = genre_factory.create_batch(2)
+        authors_ids = [author.id for author in authors]
+        genres_ids = [genre.id for genre in genres]
         payload = {
             "title": "NewName",
             "publication_date": "2000-01-01",
-            "authors": [],
-            "genres": [],
+            "authors": authors_ids,
+            "genres": genres_ids,
         }
+
         response = admin_api_client.put(
             self._get_book_detail_url(book.id), payload, format="json"
         )
