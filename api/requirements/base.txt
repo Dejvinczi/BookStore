@@ -8,3 +8,5 @@ pytest-cov>=5.0.0,<5.1
 djangorestframework-simplejwt>=5.3.1,<5.4
 django-cors-headers>=4.3.1,<4.4
 django-filter>=24.2,<24.3
+pillow>=10.3.0,<10.4
+django-cleanup>=8.1.0,<8.2

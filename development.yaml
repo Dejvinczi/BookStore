@@ -29,6 +29,8 @@ services:
       - ./api/pyproject.toml:/api/pyproject.toml
       - ./api/.flake8:/api/.flake8
       - ./api/conftest.py:/api/conftest.py
+      - ./api/static:/api/static
+      - ./api/media:/api/media
     depends_on:
       - db
 
