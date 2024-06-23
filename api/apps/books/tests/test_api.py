@@ -224,6 +224,37 @@ class TestGenreViewSet:
         assert response.data["count"] == 5
         assert len(response.data["results"]) == 1
 
+    def test_list_with_filter_name_success(self, api_client, genre_factory):
+        """Test that the list of genres can be filtered by name."""
+        genre_factory.create_batch(5)
+        filter_genre = genre_factory(name="NonExistingName")
+        response = api_client.get(
+            f"{self.GENRE_LIST_URL}",
+            {"name": filter_genre.name},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 1
+        assert len(response.data["results"]) == 1
+
+    def test_list_with_ordering_by_name_success(self, api_client, genre_factory):
+        """Test that the list of genres can be ordered by name."""
+        genres = genre_factory.create_batch(5)
+        ordered_genres = sorted(genres, key=lambda genre: genre.name.lower())
+
+        response = api_client.get(
+            f"{self.GENRE_LIST_URL}",
+            {"ordering": "name"},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["results"][0]["id"] == ordered_genres[0].id
+
+        response = api_client.get(
+            f"{self.GENRE_LIST_URL}",
+            {"ordering": "-name"},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["results"][-1]["id"] == ordered_genres[0].id
+
     def test_retrieve_success(self, api_client, genre):
         """Test that a genre can be retrieved."""
         response = api_client.get(self._get_book_detail_url(genre.id))
