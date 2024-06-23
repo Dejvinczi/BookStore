@@ -1,5 +1,6 @@
 from django.db import models
 from apps.core import validators
+from .helpers import book_image_upload_to_path
 
 
 class Author(models.Model):
@@ -32,6 +33,11 @@ class Book(models.Model):
     )
     authors = models.ManyToManyField(Author, related_name="books")
     genres = models.ManyToManyField(Genre, related_name="books")
+    image = models.ImageField(
+        upload_to=book_image_upload_to_path,
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         return f"{self.title} ({self.publication_date})"
