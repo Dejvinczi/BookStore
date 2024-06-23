@@ -10,7 +10,7 @@ from .serializers import (
     BookDetailSerializer,
     BookUploadImageSerializer,
 )
-from .filters import AuthorFilter
+from .filters import AuthorFilter, GenreFilter
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
@@ -28,6 +28,7 @@ class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = [IsAdminOrReadOnly]
+    filterset_class = GenreFilter
 
 
 class BookViewSet(viewsets.ModelViewSet):
