@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from apps.core.serializers import NestedPrimaryKeyRelatedField
 from .models import Author, Genre, Book
 
 
@@ -27,23 +26,22 @@ class BookSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ("id", "title", "authors", "genres", "publication_date")
+        fields = ("id", "title", "authors", "genres", "publication_date", "image")
+        extra_kwargs = {"image": {"read_only": True}}
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
     """Serializer for the Book model."""
 
-    authors = NestedPrimaryKeyRelatedField(
-        AuthorSerializer,
-        queryset=Author.objects.all(),
-        many=True,
-    )
-    genres = NestedPrimaryKeyRelatedField(
-        GenreSerializer,
-        queryset=Genre.objects.all(),
-        many=True,
-    )
+    class Meta:
+        model = Book
+        fields = ("id", "title", "authors", "genres", "publication_date", "image")
+        extra_kwargs = {"image": {"read_only": True}}
+
+
+class BookUploadImageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading an image to the Book model."""
 
     class Meta:
         model = Book
-        fields = ("id", "title", "authors", "genres", "publication_date")
+        fields = ("image",)
