@@ -1,5 +1,5 @@
 from django_filters import rest_framework as drf_filters
-from .models import Author, Genre
+from .models import Author, Genre, Book
 
 
 class AuthorFilter(drf_filters.FilterSet):
@@ -55,3 +55,28 @@ class GenreFilter(drf_filters.FilterSet):
     class Meta:
         model = Genre
         fields = ["name"]
+
+
+class BookFilter(drf_filters.FilterSet):
+    """Filter class for the Book model."""
+
+    title = drf_filters.CharFilter(
+        field_name="title",
+        label="Title",
+        lookup_expr="icontains",
+        help_text="Filter by title (case insensitive).",
+    )
+    publication_date = drf_filters.DateFromToRangeFilter(
+        field_name="publication_date",
+        label="Date of publication",
+        help_text="Filter by date of birth (range). Format: YYYY-MM-DD",
+    )
+    ordering = drf_filters.OrderingFilter(
+        fields=["title", "publication_date"],
+        field_labels={"title": "Title", "publication_date": "Date of publication"},
+        help_text="Order by field. Prefix with '-' for descending order.",
+    )
+
+    class Meta:
+        model = Book
+        fields = ["title", "publication_date"]
