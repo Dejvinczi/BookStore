@@ -334,6 +334,58 @@ class TestBookViewSet:
         assert response.data["count"] == 5
         assert len(response.data["results"]) == 1
 
+    def test_list_with_filter_title_success(self, api_client, book_factory):
+        """Test that the list of books can be filtered by title."""
+        book_factory.create_batch(5)
+        filter_book = book_factory(title="NonExistingTitle")
+        response = api_client.get(
+            f"{self.BOOK_LIST_URL}",
+            {"title": filter_book.title},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 1
+        assert len(response.data["results"]) == 1
+
+    def test_list_with_filter_date_of_publication_success(
+        self, api_client, book_factory
+    ):
+        """Test that the list of books can be filtered by date of publication."""
+        books = [
+            book_factory.create(publication_date=f"2000-01-0{idx}")
+            for idx in range(1, 6)
+        ]
+        first_book = books[0]
+
+        response = api_client.get(
+            f"{self.BOOK_LIST_URL}",
+            {
+                "publication_date_after": first_book.publication_date,
+                "publication_date_before": first_book.publication_date,
+            },
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["count"] == 1
+        assert len(response.data["results"]) == 1
+
+    def test_list_with_ordering_by_title_success(self, api_client, book_factory):
+        """Test that the list of books can be ordered by title."""
+        books = book_factory.create_batch(5)
+        ordered_books = sorted(books, key=lambda genre: genre.title.lower())
+
+        response = api_client.get(
+            f"{self.BOOK_LIST_URL}",
+            {"ordering": "title"},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["results"][0]["id"] == ordered_books[0].id
+
+        response = api_client.get(
+            f"{self.BOOK_LIST_URL}",
+            {"ordering": "-title"},
+        )
+        assert response.status_code == status.HTTP_200_OK
+        assert response.data["results"][-1]["id"] == ordered_books[0].id
+
     def test_retrieve_success(self, api_client, book):
         """Test that a book can be retrieved."""
         response = api_client.get(self._get_book_detail_url(book.id))
