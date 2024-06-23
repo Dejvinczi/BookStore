@@ -1,3 +1,4 @@
+import os
 import pytest
 from django.urls import reverse
 from rest_framework import status
@@ -334,6 +335,13 @@ class TestBookViewSet:
         response = auth_api_client.delete(self._get_book_detail_url(book.id))
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
+    def test_upload_image_not_as_admin_fail(self, auth_api_client, book):
+        """Test that an image can't be uploaded for users that are not admin."""
+        response = auth_api_client.post(
+            self._get_book_upload_image_url(book.id), {}, format="json"
+        )
+        assert response.status_code == status.HTTP_403_FORBIDDEN
+
     def test_create_as_admin_success(
         self,
         admin_api_client,
@@ -390,3 +398,20 @@ class TestBookViewSet:
         """Test that a book can be deleted for users that are admin."""
         response = admin_api_client.delete(self._get_book_detail_url(book.id))
         assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    def test_upload_image_as_admin_success(
+        self, admin_api_client, book, temp_image_file
+    ):
+        """Test that an image can be uploaded for users that are admin."""
+        with open(temp_image_file, "rb") as img:
+            response = admin_api_client.put(
+                self._get_book_upload_image_url(book.id),
+                {"image": img},
+                format="multipart",
+            )
+
+        assert response.status_code == status.HTTP_200_OK
+        book.refresh_from_db()
+
+        assert book.image is not None
+        os.remove(book.image.path)

@@ -1,5 +1,8 @@
+import os
 import pytest
 import factory
+import tempfile
+from PIL import Image
 from pytest_factoryboy import register
 from .factories import AuthorFactory, GenreFactory, BookFactory
 
@@ -43,3 +46,21 @@ def genre_factory():
 def book_factory():
     """Fixture for book factory."""
     return BookFactory
+
+
+@pytest.fixture
+def temp_image_file():
+    try:
+        temp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+
+        image = Image.new("RGB", (100, 100), color="red")
+        image.save(temp, format="JPEG")
+
+        temp.close()
+
+        yield temp.name
+    finally:
+        try:
+            os.remove(temp.name)
+        except (AttributeError, FileNotFoundError):
+            pass
