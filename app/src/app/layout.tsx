@@ -16,14 +16,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <html lang="en">
-            <head />
-            <body className={inter.className}>
+        <html style={{ height: '100vh' }}>
+            <body style={{ height: '100vh' }}>
                 <AppRouterCacheProvider>
                     <ThemeProvider theme={theme}>
                         <CssBaseline />
                         <Header />
-                        <Box component="main">{children}</Box>
+                        <Box component="main" sx={{ height: '85vh' }}>
+                            {children}
+                        </Box>
                         <Footer />
                     </ThemeProvider>
                 </AppRouterCacheProvider>

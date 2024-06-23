@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
     { field: 'publication_date', headerName: 'Publication Date', flex: 1 },
 ];
 
-async function fetchBooks() {
+const fetchBooks = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/`, {
         cache: 'no-store',
     });
@@ -24,13 +24,13 @@ async function fetchBooks() {
         throw new Error('Failed to fetch data');
     }
     return res.json();
-}
+};
 
 const BooksPage = async () => {
     const books = await fetchBooks();
     return (
         <div style={{ height: '100%', width: '100%' }}>
-            <CustomDataGrid columns={columns} rows={books} />
+            <CustomDataGrid columns={columns} rows={books.results} />
         </div>
     );
 };
