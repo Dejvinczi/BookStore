@@ -3,6 +3,8 @@ from .models import Author, Genre
 
 
 class AuthorFilter(drf_filters.FilterSet):
+    """Filter class for the Author model."""
+
     first_name = drf_filters.CharFilter(
         field_name="first_name",
         label="First Name",
@@ -36,6 +38,8 @@ class AuthorFilter(drf_filters.FilterSet):
 
 
 class GenreFilter(drf_filters.FilterSet):
+    """Filter class for the Genre model."""
+
     name = drf_filters.CharFilter(
         field_name="name",
         label="Name",
