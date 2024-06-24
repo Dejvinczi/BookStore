@@ -38,6 +38,13 @@ class Book(TimeStampedModel):
         blank=True,
         null=True,
     )
+    price = models.DecimalField(
+        max_digits=8,
+        decimal_places=2,
+        validators=[
+            MinValueValidator(0.01),
+        ],
+    )
 
     def __str__(self):
         return f"{self.title} ({self.publication_date})"
