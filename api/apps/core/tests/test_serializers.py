@@ -66,3 +66,10 @@ class TestNestedPrimaryKeyRelatedField:
             read_only=True,
         )
         assert nested_field.get_choices() == OrderedDict()
+
+    def test_use_pk_only_optimization(self, mock_serializer_class):
+        nested_field = NestedPrimaryKeyRelatedField(
+            serializer_class=mock_serializer_class,
+            read_only=True,
+        )
+        assert nested_field.use_pk_only_optimization() is False
