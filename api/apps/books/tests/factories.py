@@ -25,3 +25,4 @@ class BookFactory(factory.django.DjangoModelFactory):
     title = factory.Sequence(lambda n: f"Book {n}")
     description = factory.Faker("paragraph", nb_sentences=3)
     publication_date = factory.Faker("date")
+    price = factory.Faker("pydecimal", left_digits=6, right_digits=2, positive=True)

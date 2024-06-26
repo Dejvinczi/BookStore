@@ -1,5 +1,6 @@
 import os
 import pytest
+import decimal
 from django.urls import reverse
 from rest_framework import status
 
@@ -439,6 +440,7 @@ class TestBookViewSet:
             "publication_date": "2000-01-01",
             "authors": authors_ids,
             "genres": genres_ids,
+            "price": decimal.Decimal("100.00"),
         }
         response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
         assert response.status_code == status.HTTP_201_CREATED
@@ -453,9 +455,10 @@ class TestBookViewSet:
         genres_ids = [genre.id for genre in genres]
         payload = {
             "title": "NewName",
-            "publication_date": "2000-01-01",
+            "publication_date": book.publication_date,
             "authors": authors_ids,
             "genres": genres_ids,
+            "price": book.id,
         }
 
         response = admin_api_client.put(
