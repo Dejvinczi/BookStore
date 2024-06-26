@@ -2,6 +2,7 @@ import os
 import pytest
 import decimal
 from django.urls import reverse
+from django.utils import timezone
 from rest_framework import status
 
 
@@ -173,6 +174,20 @@ class TestAuthorViewSet:
         }
         response = admin_api_client.post(self.AUTHOR_LIST_URL, payload, format="json")
         assert response.status_code == status.HTTP_201_CREATED
+
+    def test_create_as_admin_success_with_future_date_of_birth_fail(
+        self, admin_api_client
+    ):
+        """Test that an author cannot be created with a future date of birth."""
+        tomorrow = timezone.now() + timezone.timedelta(days=1)
+        payload = {
+            "first_name": "Test",
+            "last_name": "Author",
+            "date_of_birth": str(tomorrow.date()),
+        }
+        response = admin_api_client.post(self.AUTHOR_LIST_URL, payload, format="json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "date_of_birth" in response.data
 
     def test_update_as_admin_success(self, admin_api_client, author):
         """Test that an author can be updated for users that are admin."""
@@ -444,6 +459,48 @@ class TestBookViewSet:
         }
         response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
         assert response.status_code == status.HTTP_201_CREATED
+
+    def test_create_as_admin_success_with_future_publication_date_fail(
+        self, admin_api_client, author_factory, genre_factory
+    ):
+        """Test that a book can't be created with a future date of publication."""
+        authors = author_factory.create_batch(2)
+        genres = genre_factory.create_batch(2)
+        authors_ids = [author.id for author in authors]
+        genres_ids = [genre.id for genre in genres]
+        tomorrow = timezone.now() + timezone.timedelta(days=1)
+
+        payload = {
+            "title": "Test",
+            "publication_date": str(tomorrow.date()),
+            "authors": authors_ids,
+            "genres": genres_ids,
+            "price": decimal.Decimal("100.00"),
+        }
+        response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "publication_date" in response.data
+
+    def test_create_as_admin_success_with_non_positive_price_fail(
+        self, admin_api_client, author_factory, genre_factory
+    ):
+        """Test that a book can't be created with a non-positive price."""
+        authors = author_factory.create_batch(2)
+        genres = genre_factory.create_batch(2)
+        authors_ids = [author.id for author in authors]
+        genres_ids = [genre.id for genre in genres]
+        tomorrow = timezone.now() + timezone.timedelta(days=1)
+
+        payload = {
+            "title": "Test",
+            "publication_date": str(tomorrow.date()),
+            "authors": authors_ids,
+            "genres": genres_ids,
+            "price": decimal.Decimal("0.00"),
+        }
+        response = admin_api_client.post(self.BOOK_LIST_URL, payload, format="json")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert "price" in response.data
 
     def test_update_as_admin_success(
         self, admin_api_client, book, author_factory, genre_factory
