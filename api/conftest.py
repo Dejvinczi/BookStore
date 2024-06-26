@@ -1,7 +1,15 @@
+import os
 import pytest
+import factory
+import tempfile
+from PIL import Image
+from pytest_factoryboy import register
+from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import AccessToken
-from django.contrib.auth import get_user_model
+
+from apps.accounts.tests.factories import UserFactory, SuperuserFactory
+from apps.books.tests.factories import AuthorFactory, GenreFactory, BookFactory
 
 
 @pytest.fixture
@@ -14,32 +22,8 @@ def auth_user_model():
     yield get_user_model()
 
 
-@pytest.fixture
-def superuser(db, auth_user_model):
-    """
-    Fixture to provide an admin user that is active in this project.
-    :return: User model
-    """
-
-    yield auth_user_model.objects.create_superuser(
-        username="testadmin",
-        password="testpassword",
-        email="testadmin@example.com",
-    )
-
-
-@pytest.fixture
-def user(db, auth_user_model):
-    """
-    Fixture to provide an user that is active in this project.
-    :return: User model
-    """
-
-    yield auth_user_model.objects.create_user(
-        username="testuser",
-        password="testpassword",
-        email="testuser@example.com",
-    )
+register(UserFactory, "user")
+register(SuperuserFactory, "superuser")
 
 
 @pytest.fixture
@@ -73,3 +57,62 @@ def admin_api_client(api_client, superuser):
     api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
 
     yield api_client
+
+
+@pytest.fixture
+def author_data():
+    """Fixture for author data."""
+    return factory.build(dict, FACTORY_CLASS=AuthorFactory)
+
+
+@pytest.fixture
+def genre_data():
+    """Fixture for genre data."""
+    return factory.build(dict, FACTORY_CLASS=GenreFactory)
+
+
+@pytest.fixture
+def book_data():
+    """Fixture for book data."""
+    return factory.build(dict, FACTORY_CLASS=BookFactory)
+
+
+register(AuthorFactory, "author")
+register(GenreFactory, "genre")
+register(BookFactory, "book")
+
+
+@pytest.fixture
+def author_factory():
+    """Fixture for author factory."""
+    return AuthorFactory
+
+
+@pytest.fixture
+def genre_factory():
+    """Fixture for genre factory."""
+    return GenreFactory
+
+
+@pytest.fixture
+def book_factory():
+    """Fixture for book factory."""
+    return BookFactory
+
+
+@pytest.fixture
+def temp_image_file():
+    try:
+        temp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
+
+        image = Image.new("RGB", (100, 100), color="red")
+        image.save(temp, format="JPEG")
+
+        temp.close()
+
+        yield temp.name
+    finally:
+        try:
+            os.remove(temp.name)
+        except (AttributeError, FileNotFoundError):
+            pass
