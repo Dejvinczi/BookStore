@@ -2,6 +2,7 @@ import os
 import pytest
 import factory
 import tempfile
+
 from PIL import Image
 from pytest_factoryboy import register
 from django.contrib.auth import get_user_model
@@ -10,6 +11,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 
 from apps.accounts.tests.factories import UserFactory, SuperuserFactory
 from apps.books.tests.factories import AuthorFactory, GenreFactory, BookFactory
+from apps.carts.tests.factories import CartFactory, CartItemFactory
 
 
 @pytest.fixture
@@ -61,19 +63,29 @@ def admin_api_client(api_client, superuser):
 
 @pytest.fixture
 def author_data():
-    """Fixture for author data."""
+    """
+    Fixture for author data.
+
+    :return: dict
+    """
     return factory.build(dict, FACTORY_CLASS=AuthorFactory)
 
 
 @pytest.fixture
 def genre_data():
-    """Fixture for genre data."""
+    """
+    Fixture for genre data.
+    :return: dict
+    """
     return factory.build(dict, FACTORY_CLASS=GenreFactory)
 
 
 @pytest.fixture
 def book_data():
-    """Fixture for book data."""
+    """
+    Fixture for book data.
+    :return: dict
+    """
     return factory.build(dict, FACTORY_CLASS=BookFactory)
 
 
@@ -84,24 +96,37 @@ register(BookFactory, "book")
 
 @pytest.fixture
 def author_factory():
-    """Fixture for author factory."""
+    """
+    Fixture for author factory.
+    :return: AuthorFactory
+    """
     return AuthorFactory
 
 
 @pytest.fixture
 def genre_factory():
-    """Fixture for genre factory."""
+    """
+    Fixture for genre factory.
+    :return: GenreFactory
+    """
     return GenreFactory
 
 
 @pytest.fixture
 def book_factory():
-    """Fixture for book factory."""
+    """
+    Fixture for book factory.
+    :return: BookFactory
+    """
     return BookFactory
 
 
 @pytest.fixture
 def temp_image_file():
+    """
+    Fixture for temporary image file.
+    :return: str
+    """
     try:
         temp = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
 
@@ -116,3 +141,43 @@ def temp_image_file():
             os.remove(temp.name)
         except (AttributeError, FileNotFoundError):
             pass
+
+
+@pytest.fixture
+def cart_data():
+    """
+    Fixture for cart data.
+    :return: dict
+    """
+    return factory.build(dict, FACTORY_CLASS=CartFactory)
+
+
+@pytest.fixture
+def cart_item_data():
+    """
+    Fixture for cart item data.
+    :return: dict
+    """
+    return factory.build(dict, FACTORY_CLASS=CartItemFactory)
+
+
+register(CartFactory, "cart")
+register(CartItemFactory, "cart_item")
+
+
+@pytest.fixture
+def cart_factory():
+    """
+    Fixture for CartFactory.
+    :return: CartFactory
+    """
+    return CartFactory
+
+
+@pytest.fixture
+def cart_item_factory():
+    """
+    Fixture for CartItemFactory.
+    :return: CartItemFactory
+    """
+    return CartItemFactory
