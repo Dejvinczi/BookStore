@@ -7,7 +7,8 @@ from .serializers import (
     AuthorSerializer,
     GenreSerializer,
     BookSerializer,
-    BookDetailSerializer,
+    BookListSerializer,
+    BookRetrieveSerializer,
     BookUploadImageSerializer,
 )
 from .filters import AuthorFilter, GenreFilter, BookFilter
@@ -36,18 +37,18 @@ class BookViewSet(viewsets.ModelViewSet):
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
-    detail_serializer_class = BookDetailSerializer
-    upload_image_serializer_class = BookUploadImageSerializer
     permission_classes = [IsAdminOrReadOnly]
     filterset_class = BookFilter
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
         if self.action == "list":
-            return self.serializer_class
+            return BookListSerializer
+        if self.action in "retrieve":
+            return BookRetrieveSerializer
         if self.action == "upload_image":
-            return self.upload_image_serializer_class
-        return self.detail_serializer_class
+            return BookUploadImageSerializer
+        return self.serializer_class
 
     @action(
         detail=True,
