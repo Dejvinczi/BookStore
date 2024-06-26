@@ -68,7 +68,7 @@ class BookListSerializer(BookSerializer):
     genres = serializers.StringRelatedField(many=True)
 
     class Meta(BookSerializer.Meta):
-        pass
+        read_only_fields = BookSerializer.Meta.fields
 
 
 class BookRetrieveSerializer(BookSerializer):
@@ -78,7 +78,7 @@ class BookRetrieveSerializer(BookSerializer):
     genres = GenreSerializer(many=True, read_only=True)
 
     class Meta(BookSerializer.Meta):
-        pass
+        read_only_fields = BookSerializer.Meta.fields
 
 
 class BookUploadImageSerializer(serializers.ModelSerializer):
