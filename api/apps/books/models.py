@@ -1,8 +1,5 @@
-from decimal import Decimal
 from django.db import models
-from django.core.validators import MinValueValidator
 from apps.core.models import TimeStampedModel
-from apps.core.validators import date_cannot_be_in_future
 from .helpers import book_image_upload_to_path
 
 
@@ -11,7 +8,7 @@ class Author(TimeStampedModel):
 
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    date_of_birth = models.DateField(validators=[date_cannot_be_in_future])
+    date_of_birth = models.DateField()
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -31,7 +28,7 @@ class Book(TimeStampedModel):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    publication_date = models.DateField(validators=[date_cannot_be_in_future])
+    publication_date = models.DateField()
     authors = models.ManyToManyField(Author, related_name="books")
     genres = models.ManyToManyField(Genre, related_name="books")
     image = models.ImageField(
@@ -39,11 +36,7 @@ class Book(TimeStampedModel):
         blank=True,
         null=True,
     )
-    price = models.DecimalField(
-        max_digits=8,
-        decimal_places=2,
-        validators=[MinValueValidator(Decimal("0.01"))],
-    )
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f"{self.title} ({self.publication_date})"
