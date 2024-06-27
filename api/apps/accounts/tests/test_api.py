@@ -23,7 +23,12 @@ class TestRegisterView:
         response = api_client.post(self.REGISTER_URL, payload, format="json")
 
         assert response.status_code == status.HTTP_201_CREATED
-        assert auth_user_model.objects.filter(username=payload["username"]).count() == 1
+
+        user = auth_user_model.objects.get(username=payload["username"])
+        assert user.username == payload["username"]
+        assert user.email == payload["email"]
+        assert user.check_password(payload["password"])
+        assert user.cart is not None
 
     def test_register_user_existing_username_fail(self, api_client, auth_user_model):
         """Test that registering a user with an existing username fails and returns a 400 status code."""
