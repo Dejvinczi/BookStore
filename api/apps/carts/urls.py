@@ -8,7 +8,7 @@ carts_router.register("cart/items", views.CartItemViewSet, basename="cart-item")
 app_name = "carts"
 
 urlpatterns = [
-    path("cart", views.CartAPIView.as_view(), name="cart"),
+    path("cart", views.CartRetrieveAPIView.as_view(), name="cart-retrieve"),
 ]
 
 urlpatterns += carts_router.urls

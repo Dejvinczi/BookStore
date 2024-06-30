@@ -2,32 +2,23 @@ from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
 from .models import CartItem
 from .serializers import (
-    CartSerializer,
     CartRetrieveSerializer,
-    CartItemSerializer,
-    CartItemListSerializer,
     CartItemCreateSerializer,
     CartItemUpdateSerializer,
 )
 
 
-class CartAPIView(
+class CartRetrieveAPIView(
     mixins.RetrieveModelMixin,
     generics.GenericAPIView,
 ):
     """View for the user cart."""
 
-    serializer_class = CartSerializer
+    serializer_class = CartRetrieveSerializer
 
     def get_object(self):
         """Get current user cart."""
         return self.request.user.cart
-
-    def get_serializer_class(self):
-        """Get serializer class based on request method."""
-        if self.request.method == "GET":
-            return CartRetrieveSerializer
-        return self.serializer_class
 
     def get(self, request, *args, **kwargs):
         """Retrieve user cart."""
@@ -42,8 +33,6 @@ class CartItemViewSet(
 ):
     """Viewset for the CartItem model."""
 
-    serializer_class = CartItemSerializer
-
     def get_queryset(self):
         """Get current user cart items."""
         user_cart = self.request.user.cart
@@ -52,13 +41,10 @@ class CartItemViewSet(
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
-        if self.action == "list":
-            return CartItemListSerializer
         if self.action == "create":
             return CartItemCreateSerializer
         if self.action in ["partial_update", "update"]:
             return CartItemUpdateSerializer
-        return self.serializer_class
 
     def perform_create(self, serializer):
         """Create a new cart item for the current user cart."""
