@@ -16,7 +16,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ("username", "password", "email")
 
     def create(self, validated_data):
-        user = get_user_model().objects.create_user(**validated_data)
+        user = get_user_model().objects.create_user_with_cart(**validated_data)
         return user
 
 
