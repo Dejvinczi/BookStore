@@ -15,6 +15,11 @@ class Cart(TimeStampedModel):
     def __str__(self):
         return f"{self.user.username}'s cart"
 
+    @property
+    def total_price(self):
+        value = sum(item.book.price * item.quantity for item in self.items.all())
+        return value
+
 
 class CartItem(TimeStampedModel):
     """Shop cart item model in the system."""
