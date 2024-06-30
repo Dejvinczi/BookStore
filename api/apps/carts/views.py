@@ -1,6 +1,7 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
-from .models import CartItem
+from .models import Cart, CartItem
 from .serializers import (
     CartRetrieveSerializer,
     CartItemCreateSerializer,
@@ -14,11 +15,19 @@ class CartRetrieveAPIView(
 ):
     """View for the user cart."""
 
+    queryset = Cart.objects.prefetch_related(
+        "items",
+        "items__book",
+        "items__book__authors",
+        "items__book__genres",
+    ).all()
     serializer_class = CartRetrieveSerializer
 
     def get_object(self):
         """Get current user cart."""
-        return self.request.user.cart
+        obj = get_object_or_404(self.queryset, user=self.request.user)
+        self.check_object_permissions(self.request, obj)
+        return obj
 
     def get(self, request, *args, **kwargs):
         """Retrieve user cart."""
@@ -33,18 +42,21 @@ class CartItemViewSet(
 ):
     """Viewset for the CartItem model."""
 
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemCreateSerializer
+
     def get_queryset(self):
         """Get current user cart items."""
-        user_cart = self.request.user.cart
-        queryset = CartItem.objects.filter(cart=user_cart)
+        request_user = self.request.user
+        queryset = CartItem.objects.filter(cart__user=request_user)
         return queryset
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
-        if self.action == "create":
-            return CartItemCreateSerializer
         if self.action in ["partial_update", "update"]:
             return CartItemUpdateSerializer
+
+        return self.serializer_class
 
     def perform_create(self, serializer):
         """Create a new cart item for the current user cart."""

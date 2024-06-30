@@ -40,6 +40,14 @@ class BookViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAdminOrReadOnly]
     filterset_class = BookFilter
 
+    def get_queryset(self):
+        """Get queryset based on action."""
+        if self.action == "list":
+            return Book.objects.prefetch_related("authors", "genres").all()
+        if self.action == "retrieve":
+            return self.queryset
+        return self.queryset
+
     def get_serializer_class(self):
         """Get serializer class based on action."""
         if self.action == "list":
