@@ -8,10 +8,9 @@ WORKDIR /api
 
 COPY config config
 COPY apps apps
-COPY pyproject.toml pyproject.toml
-COPY .flake8 .flake8
 COPY conftest.py conftest.py
 COPY requirements/base.txt requirements/base.txt
+COPY manage.py manage.py
 
 RUN pip install -r requirements/base.txt
 
@@ -25,8 +24,10 @@ FROM base as development
 
 ENV DJANGO_SETTINGS_MODULE=config.settings.development
  
-COPY requirements/development.txt requirements/development.txt
+COPY pyproject.toml pyproject.toml
+COPY .flake8 .flake8
 
+COPY requirements/development.txt requirements/development.txt
 RUN pip install -r requirements/development.txt
 
 COPY scripts/dev-run.sh ./run.sh
@@ -43,9 +44,9 @@ FROM base as production
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
 COPY requirements/production.txt requirements/production.txt
-COPY /scripts/prod-run.sh ./run.sh
-
 RUN pip install -r requirements/production.txt
+
+COPY /scripts/prod-run.sh ./run.sh
 RUN chmod +x ./run.sh
 
 ENTRYPOINT ["./run.sh"]
