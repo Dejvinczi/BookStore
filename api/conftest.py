@@ -4,7 +4,6 @@ import factory
 import tempfile
 
 from PIL import Image
-from pytest_factoryboy import register
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import AccessToken
@@ -24,8 +23,14 @@ def auth_user_model():
     yield get_user_model()
 
 
-register(UserFactory, "user")
-register(SuperuserFactory, "superuser")
+@pytest.fixture
+def user():
+    yield UserFactory()
+
+
+@pytest.fixture
+def superuser():
+    yield SuperuserFactory()
 
 
 @pytest.fixture
@@ -89,9 +94,31 @@ def book_data():
     return factory.build(dict, FACTORY_CLASS=BookFactory)
 
 
-register(AuthorFactory, "author")
-register(GenreFactory, "genre")
-register(BookFactory, "book")
+@pytest.fixture
+def author():
+    """
+    Fixture for author.
+    :return: Author
+    """
+    return AuthorFactory()
+
+
+@pytest.fixture
+def genre():
+    """
+    Fixture for genre.
+    :return: Genre
+    """
+    return GenreFactory()
+
+
+@pytest.fixture
+def book():
+    """
+    Fixture for book.
+    :return: Book
+    """
+    return BookFactory()
 
 
 @pytest.fixture
@@ -161,8 +188,22 @@ def cart_item_data():
     return factory.build(dict, FACTORY_CLASS=CartItemFactory)
 
 
-register(CartFactory, "cart")
-register(CartItemFactory, "cart_item")
+@pytest.fixture
+def cart():
+    """
+    Fixture for CartFactory.
+    :return: CartFactory
+    """
+    yield CartFactory()
+
+
+@pytest.fixture
+def cart_item():
+    """
+    Fixture for CartItemFactory.
+    :return: CartItemFactory
+    """
+    yield CartItemFactory()
 
 
 @pytest.fixture
