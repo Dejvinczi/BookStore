@@ -67,8 +67,6 @@ class CartItemViewSet(
         try:
             book_id = request.data.get("book")
             cart_item = self.get_queryset().get(book_id=book_id)
-            cart_item.quantity += 1
-            cart_item.save()
             serializer = self.get_serializer(cart_item)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except CartItem.DoesNotExist:
