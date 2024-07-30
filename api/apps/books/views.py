@@ -61,7 +61,7 @@ class BookViewSet(viewsets.ModelViewSet):
     @action(
         detail=True,
         methods=["put"],
-        url_path="upload-image",
+        url_path="image",
         parser_classes=[MultiPartParser],
     )
     def upload_image(self, request, *args, **kwargs):
