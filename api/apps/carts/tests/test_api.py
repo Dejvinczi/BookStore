@@ -7,12 +7,12 @@ from rest_framework import status
 class TestCartAPIView:
     """Tests for the Cart API."""
 
-    CART_RETRIEVE_URL = reverse("carts:cart-retrieve")
+    CART_URL = reverse("carts:cart")
 
     def test_retrieve_empty_cart_success(self, user, auth_api_client, cart_factory):
         """Test that a user can retrieve their cart."""
         cart_factory(user=user)
-        response = auth_api_client.get(self.CART_RETRIEVE_URL, format="json")
+        response = auth_api_client.get(self.CART_URL, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data["items"]) == 0
@@ -33,7 +33,7 @@ class TestCartAPIView:
             cart_item_factory(cart=cart, book=book, quantity=2) for book in books
         ]
 
-        response = auth_api_client.get(self.CART_RETRIEVE_URL, format="json")
+        response = auth_api_client.get(self.CART_URL, format="json")
 
         assert response.status_code == status.HTTP_200_OK
         assert len(response.data["items"]) == 3

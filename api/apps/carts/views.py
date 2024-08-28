@@ -23,18 +23,13 @@ class CartAPIView(
         "items__book__authors",
         "items__book__genres",
     ).all()
-    serializer_class = CartSerializer
+    serializer_class = CartRetrieveSerializer
 
     def get_object(self):
         """Get current user cart."""
         obj = get_object_or_404(self.queryset, user=self.request.user)
         self.check_object_permissions(self.request, obj)
         return obj
-
-    def get_serializer_class(self):
-        if self.request.method == "GET":
-            return CartRetrieveSerializer
-        return self.serializer_class
 
     def get(self, request, *args, **kwargs):
         """Retrieve user cart."""
@@ -50,7 +45,7 @@ class CartItemViewSet(
     """Viewset for the CartItem model."""
 
     queryset = CartItem.objects.all()
-    serializer_class = CartItemSerializer
+    serializer_class = CartItemCreateSerializer
 
     def get_queryset(self):
         """Get current user cart items."""
@@ -60,8 +55,6 @@ class CartItemViewSet(
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
-        if self.action == "create":
-            return CartItemCreateSerializer
         if self.action in ["partial_update", "update"]:
             return CartItemUpdateSerializer
 
