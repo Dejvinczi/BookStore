@@ -7,6 +7,12 @@ from .models import Cart, CartItem
 class CartItemSerializer(serializers.ModelSerializer):
     """Base serializer for the CartItem model."""
 
+    total_price = serializers.DecimalField(
+        read_only=True,
+        max_digits=20,
+        decimal_places=2,
+    )
+
     class Meta:
         model = CartItem
         fields = "__all__"
@@ -27,7 +33,7 @@ class CartItemListSerializer(CartItemSerializer):
 
     class Meta(CartItemSerializer.Meta):
         model = CartItem
-        fields = ("id", "book", "quantity")
+        fields = ("id", "book", "quantity", "total_price")
 
 
 class CartItemCreateSerializer(CartItemSerializer):
@@ -48,6 +54,12 @@ class CartItemUpdateSerializer(CartItemSerializer):
 class CartSerializer(serializers.ModelSerializer):
     """Serializer for the Cart model."""
 
+    total_price = serializers.DecimalField(
+        read_only=True,
+        max_digits=20,
+        decimal_places=2,
+    )
+
     class Meta:
         model = Cart
         fields = "__all__"
@@ -57,11 +69,6 @@ class CartRetrieveSerializer(CartSerializer):
     """Serializer for the retrieve single Cart model instance."""
 
     items = CartItemListSerializer(many=True, read_only=True)
-    total_price = serializers.DecimalField(
-        read_only=True,
-        max_digits=20,
-        decimal_places=2,
-    )
 
     class Meta(CartSerializer.Meta):
         fields = ("items", "total_price")

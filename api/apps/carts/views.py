@@ -3,13 +3,15 @@ from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
 from .models import Cart, CartItem
 from .serializers import (
+    CartSerializer,
     CartRetrieveSerializer,
+    CartItemSerializer,
     CartItemCreateSerializer,
     CartItemUpdateSerializer,
 )
 
 
-class CartRetrieveAPIView(
+class CartAPIView(
     mixins.RetrieveModelMixin,
     generics.GenericAPIView,
 ):
@@ -21,13 +23,18 @@ class CartRetrieveAPIView(
         "items__book__authors",
         "items__book__genres",
     ).all()
-    serializer_class = CartRetrieveSerializer
+    serializer_class = CartSerializer
 
     def get_object(self):
         """Get current user cart."""
         obj = get_object_or_404(self.queryset, user=self.request.user)
         self.check_object_permissions(self.request, obj)
         return obj
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return CartRetrieveSerializer
+        return self.serializer_class
 
     def get(self, request, *args, **kwargs):
         """Retrieve user cart."""
@@ -43,7 +50,7 @@ class CartItemViewSet(
     """Viewset for the CartItem model."""
 
     queryset = CartItem.objects.all()
-    serializer_class = CartItemCreateSerializer
+    serializer_class = CartItemSerializer
 
     def get_queryset(self):
         """Get current user cart items."""
@@ -53,6 +60,8 @@ class CartItemViewSet(
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
+        if self.action == "create":
+            return CartItemCreateSerializer
         if self.action in ["partial_update", "update"]:
             return CartItemUpdateSerializer
 
@@ -67,6 +76,8 @@ class CartItemViewSet(
         try:
             book_id = request.data.get("book")
             cart_item = self.get_queryset().get(book_id=book_id)
+            cart_item.quantity += 1
+            cart_item.save()
             serializer = self.get_serializer(cart_item)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except CartItem.DoesNotExist:
