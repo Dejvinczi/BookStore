@@ -11,6 +11,7 @@ from rest_framework_simplejwt.tokens import AccessToken
 from apps.accounts.tests.factories import UserFactory, SuperuserFactory
 from apps.books.tests.factories import AuthorFactory, GenreFactory, BookFactory
 from apps.carts.tests.factories import CartFactory, CartItemFactory
+from apps.orders.tests.factories import OrderFactory, OrderItemFactory
 
 
 @pytest.fixture
@@ -229,3 +230,57 @@ def cart_item_factory():
     :return: CartItemFactory
     """
     return CartItemFactory
+
+
+@pytest.fixture
+def order_data():
+    """
+    Fixture to provide Order data.
+    :return: dict
+    """
+    return factory.build(dict, FACTORY_CLASS=OrderFactory)
+
+
+@pytest.fixture
+def order_item_data():
+    """
+    Fixture to provide OrderItem data.
+    :return: dict
+    """
+    return factory.build(dict, FACTORY_CLASS=OrderItemFactory)
+
+
+@pytest.fixture
+def order():
+    """
+    Fixture to provide Order.
+    :return: Order
+    """
+    return OrderFactory()
+
+
+@pytest.fixture
+def order_item():
+    """
+    Fixture to provide OrderItem.
+    :return: OrderItem
+    """
+    return OrderItemFactory()
+
+
+@pytest.fixture
+def order_factory():
+    """
+    Fixture to provide OrderFactory.
+    :return: OrderFactory
+    """
+    return OrderFactory
+
+
+@pytest.fixture
+def order_item_factory():
+    """
+    Fixture to provide OrderItemFactory.
+    :return: OrderItemFactory
+    """
+    return OrderItemFactory
