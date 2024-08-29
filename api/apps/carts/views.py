@@ -3,9 +3,7 @@ from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
 from .models import Cart, CartItem
 from .serializers import (
-    CartSerializer,
     CartRetrieveSerializer,
-    CartItemSerializer,
     CartItemCreateSerializer,
     CartItemUpdateSerializer,
 )
