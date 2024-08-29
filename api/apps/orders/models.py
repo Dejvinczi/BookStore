@@ -18,8 +18,6 @@ class Order(TimeStampedModel):
         COMPLETED = "completed"
         CANCELED = "canceled"
 
-    status = models.CharField(max_length=255, choices=StatusChoices.choices)
-
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     no = models.SlugField(
         max_length=32,
