@@ -16,7 +16,7 @@ from apps.carts.tests.factories import CartFactory, CartItemFactory
 @pytest.fixture
 def auth_user_model():
     """
-    Fixture to provide an User model that is active in this project.
+    Fixture to provide an User model.
     :return: User model
     """
 
@@ -25,11 +25,19 @@ def auth_user_model():
 
 @pytest.fixture
 def user():
+    """
+    Fixture to provide an User.
+    :return: User model
+    """
     yield UserFactory()
 
 
 @pytest.fixture
 def superuser():
+    """
+    Fixture to provide an Superuser.
+    :return: User model
+    """
     yield SuperuserFactory()
 
 
@@ -69,8 +77,7 @@ def admin_api_client(api_client, superuser):
 @pytest.fixture
 def author_data():
     """
-    Fixture for author data.
-
+    Fixture to provide Author data.
     :return: dict
     """
     return factory.build(dict, FACTORY_CLASS=AuthorFactory)
@@ -79,7 +86,7 @@ def author_data():
 @pytest.fixture
 def genre_data():
     """
-    Fixture for genre data.
+    Fixture to provide Genre data.
     :return: dict
     """
     return factory.build(dict, FACTORY_CLASS=GenreFactory)
@@ -88,7 +95,7 @@ def genre_data():
 @pytest.fixture
 def book_data():
     """
-    Fixture for book data.
+    Fixture to provide Book data.
     :return: dict
     """
     return factory.build(dict, FACTORY_CLASS=BookFactory)
@@ -97,7 +104,7 @@ def book_data():
 @pytest.fixture
 def author():
     """
-    Fixture for author.
+    Fixture to provide Author.
     :return: Author
     """
     return AuthorFactory()
@@ -106,7 +113,7 @@ def author():
 @pytest.fixture
 def genre():
     """
-    Fixture for genre.
+    Fixture to provide Genre.
     :return: Genre
     """
     return GenreFactory()
@@ -115,7 +122,7 @@ def genre():
 @pytest.fixture
 def book():
     """
-    Fixture for book.
+    Fixture to provide Book.
     :return: Book
     """
     return BookFactory()
@@ -124,7 +131,7 @@ def book():
 @pytest.fixture
 def author_factory():
     """
-    Fixture for author factory.
+    Fixture to provide AuthorFactory.
     :return: AuthorFactory
     """
     return AuthorFactory
@@ -133,7 +140,7 @@ def author_factory():
 @pytest.fixture
 def genre_factory():
     """
-    Fixture for genre factory.
+    Fixture to provide GenreFactory.
     :return: GenreFactory
     """
     return GenreFactory
@@ -142,7 +149,7 @@ def genre_factory():
 @pytest.fixture
 def book_factory():
     """
-    Fixture for book factory.
+    Fixture to provide BookFactory.
     :return: BookFactory
     """
     return BookFactory
@@ -151,7 +158,7 @@ def book_factory():
 @pytest.fixture
 def temp_image_file():
     """
-    Fixture for temporary image file.
+    Fixture to provide temporary image file.
     :return: str
     """
     try:
@@ -173,7 +180,7 @@ def temp_image_file():
 @pytest.fixture
 def cart_data():
     """
-    Fixture for cart data.
+    Fixture to provide Cart data.
     :return: dict
     """
     return factory.build(dict, FACTORY_CLASS=CartFactory)
@@ -182,7 +189,7 @@ def cart_data():
 @pytest.fixture
 def cart_item_data():
     """
-    Fixture for cart item data.
+    Fixture to provide CartItem data.
     :return: dict
     """
     return factory.build(dict, FACTORY_CLASS=CartItemFactory)
@@ -191,8 +198,8 @@ def cart_item_data():
 @pytest.fixture
 def cart():
     """
-    Fixture for CartFactory.
-    :return: CartFactory
+    Fixture to provide Cart.
+    :return: Cart
     """
     yield CartFactory()
 
@@ -200,7 +207,7 @@ def cart():
 @pytest.fixture
 def cart_item():
     """
-    Fixture for CartItemFactory.
+    Fixture to provide CartItemFactory.
     :return: CartItemFactory
     """
     yield CartItemFactory()
@@ -209,7 +216,7 @@ def cart_item():
 @pytest.fixture
 def cart_factory():
     """
-    Fixture for CartFactory.
+    Fixture to provide CartFactory.
     :return: CartFactory
     """
     return CartFactory
@@ -218,7 +225,7 @@ def cart_factory():
 @pytest.fixture
 def cart_item_factory():
     """
-    Fixture for CartItemFactory.
+    Fixture to provide CartItemFactory.
     :return: CartItemFactory
     """
     return CartItemFactory
