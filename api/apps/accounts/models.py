@@ -13,6 +13,13 @@ class CustomUserManager(UserManager):
             Cart.objects.create(user=user)
             return user
 
+    def create_superuser_with_cart(self, username, email, password, **extra_fields):
+        """Create and save a superuser with the given username, email, and password."""
+        with transaction.atomic():
+            user = self.create_superuser(username, email, password, **extra_fields)
+            Cart.objects.create(user=user)
+            return user
+
 
 class User(AbstractUser):
     """User model in the system."""
