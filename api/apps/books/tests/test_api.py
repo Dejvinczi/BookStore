@@ -95,7 +95,7 @@ class TestAuthorViewSet:
     def test_list_with_ordering_by_last_name_success(self, api_client, author_factory):
         """Test that the list of authors can be ordered by last name."""
         authors = author_factory.create_batch(5)
-        ordered_authors = sorted(authors, key=lambda author: author.last_name.lower())
+        ordered_authors = sorted(authors, key=lambda author: author.last_name)
 
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
