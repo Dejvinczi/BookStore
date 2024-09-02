@@ -10,6 +10,7 @@ class OrderFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory("apps.accounts.tests.factories.UserFactory")
     status = factory.Iterator(Order.StatusChoices.choices)
+    address = factory.Faker("address")
 
 
 class OrderItemFactory(factory.django.DjangoModelFactory):
