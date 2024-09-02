@@ -6,8 +6,9 @@ from ..models import Cart, CartItem
 class TestCartModel:
     """Tests for the Cart model."""
 
-    @pytest.fixture
-    def cart_data(self, user):
+    @pytest.fixture(autouse=True)
+    def cart_data(self, user_factory):
+        user = user_factory()
         return {"user": user}
 
     def test_create_cart(self, cart_data):

@@ -9,9 +9,8 @@ class TestCartAPIView:
 
     CART_URL = reverse("carts:cart")
 
-    def test_retrieve_empty_cart_success(self, user, auth_api_client, cart_factory):
+    def test_retrieve_empty_cart_success(self, auth_api_client):
         """Test that a user can retrieve their cart."""
-        cart_factory(user=user)
         response = auth_api_client.get(self.CART_URL, format="json")
 
         assert response.status_code == status.HTTP_200_OK
@@ -22,12 +21,11 @@ class TestCartAPIView:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
         cart_item_factory,
     ):
         """Test that a user can retrieve their cart."""
-        cart = cart_factory(user=user)
+        cart = user.cart
         books = book_factory.create_batch(3)
         cart_items = [
             cart_item_factory(cart=cart, book=book, quantity=2) for book in books
@@ -58,12 +56,11 @@ class TestCartItemViewSet:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
     ):
         """Test that a user can create a new cart item (add to cart new book)."""
 
-        cart = cart_factory(user=user)
+        cart = user.cart
         book = book_factory()
         payload = {"book": book.id}
 
@@ -81,13 +78,12 @@ class TestCartItemViewSet:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
         cart_item_factory,
     ):
         """Test that a user can create a new cart item (add to cart existing book - increment quantity)."""
 
-        cart = cart_factory(user=user)
+        cart = user.cart
         book = book_factory()
         cart_item = cart_item_factory(cart=cart, book=book, quantity=2)
         payload = {"book": book.id}
@@ -105,13 +101,12 @@ class TestCartItemViewSet:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
         cart_item_factory,
     ):
         """Test that a user can update the quantity of an existing cart item."""
 
-        cart = cart_factory(user=user)
+        cart = user.cart
         book = book_factory()
         cart_item = cart_item_factory(cart=cart, book=book, quantity=2)
         payload = {"quantity": 3}
@@ -133,13 +128,12 @@ class TestCartItemViewSet:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
         cart_item_factory,
     ):
         """Test that a user cannot update the quantity of an existing cart item to zero."""
 
-        cart = cart_factory(user=user)
+        cart = user.cart
         book = book_factory()
         cart_item = cart_item_factory(cart=cart, book=book, quantity=2)
         payload = {"quantity": 0}
@@ -157,13 +151,12 @@ class TestCartItemViewSet:
         self,
         user,
         auth_api_client,
-        cart_factory,
         book_factory,
         cart_item_factory,
     ):
         """Test that a user can delete an existing cart item."""
 
-        cart = cart_factory(user=user)
+        cart = user.cart
         book = book_factory()
         cart_item = cart_item_factory(cart=cart, book=book, quantity=2)
 
