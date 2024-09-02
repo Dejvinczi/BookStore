@@ -11,15 +11,14 @@ class TestOrderModel:
         order = Order.objects.create(user=user)
         assert order.id is not None
         assert order.user == user
-        assert order.status == Order.StatusChoices.NEW
+        assert order.status == Order.StatusChoices.IN_PROGRESS
         assert order.total_price == 0
 
     def test_order_statuses(self):
         """Test that the Order statuses are correct."""
-        assert Order.StatusChoices.NEW == "new"
-        assert Order.StatusChoices.IN_PROGRESS == "in_progress"
-        assert Order.StatusChoices.COMPLETED == "completed"
-        assert Order.StatusChoices.CANCELED == "canceled"
+        assert Order.StatusChoices.IN_PROGRESS == "In Progress"
+        assert Order.StatusChoices.COMPLETED == "Completed"
+        assert Order.StatusChoices.CANCELED == "Canceled"
 
     def test_str(self, user):
         """Test that the Order model returns the correct string representation."""
