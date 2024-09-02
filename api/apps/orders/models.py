@@ -13,10 +13,9 @@ class Order(TimeStampedModel):
     class StatusChoices(models.TextChoices):
         """Order status choices."""
 
-        NEW = "new"
-        IN_PROGRESS = "in_progress"
-        COMPLETED = "completed"
-        CANCELED = "canceled"
+        IN_PROGRESS = "In Progress"
+        COMPLETED = "Completed"
+        CANCELED = "Canceled"
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="orders")
     no = models.SlugField(
@@ -28,8 +27,9 @@ class Order(TimeStampedModel):
     status = models.CharField(
         max_length=255,
         choices=StatusChoices.choices,
-        default=StatusChoices.NEW,
+        default=StatusChoices.IN_PROGRESS,
     )
+    address = models.TextField()
 
     def __str__(self):
         return f"Order {self.no}"
