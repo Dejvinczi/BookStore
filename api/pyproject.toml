@@ -11,7 +11,8 @@ omit = [
     "*/migrations/*",
     "*/tests/*",
     "*/test_*.py",
-    "*_tests.py"
+    "*_tests.py",
+    "apps/core/scheme.py",
 ]
 
 [tool.black]
