@@ -45,6 +45,22 @@ class TestUserModel:
         assert user.check_password(superuser_data["password"])
         assert user.is_superuser
 
+    def test_create_superuser_with_cart(self, auth_user_model):
+        """Test that the User model can be created as a superuser with a cart."""
+        superuser_data = {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testuser@example.com",
+            "is_superuser": True,
+        }
+
+        user = auth_user_model.objects.create_superuser_with_cart(**superuser_data)
+        assert user.username == superuser_data["username"]
+        assert user.email == superuser_data["email"]
+        assert user.check_password(superuser_data["password"])
+        assert user.is_superuser
+        assert user.cart is not None
+
     def test_str(self, auth_user_model):
         """Test that the User model returns the correct string representation."""
         user = auth_user_model.objects.create_user(
