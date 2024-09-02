@@ -2,12 +2,17 @@ import os
 import pytest
 import factory
 import tempfile
-
 from PIL import Image
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import AccessToken
 
+# Models
+from apps.books.models import Author, Genre, Book
+from apps.carts.models import Cart, CartItem
+from apps.orders.models import Order, OrderItem
+
+# Factories
 from apps.accounts.tests.factories import UserFactory, SuperuserFactory
 from apps.books.tests.factories import AuthorFactory, GenreFactory, BookFactory
 from apps.carts.tests.factories import CartFactory, CartItemFactory
@@ -25,21 +30,47 @@ def auth_user_model():
 
 
 @pytest.fixture
-def user():
+def user(auth_user_model):
     """
     Fixture to provide an User.
     :return: User model
     """
-    yield UserFactory()
+    yield auth_user_model.objects.create_user_with_cart(
+        username="testuser",
+        password="testpassword",
+        email="testuser@example.com",
+    )
 
 
 @pytest.fixture
-def superuser():
+def superuser(auth_user_model):
     """
     Fixture to provide an Superuser.
     :return: User model
     """
-    yield SuperuserFactory()
+    yield auth_user_model.objects.create_superuser_with_cart(
+        username="testsuperuser",
+        password="testpassword",
+        email="testsuperuser@example.com",
+    )
+
+
+@pytest.fixture
+def user_factory():
+    """
+    Fixture to provide a UserFactory.
+    :return: UserFactory
+    """
+    yield UserFactory
+
+
+@pytest.fixture
+def superuser_factory():
+    """
+    Fixture to provide a SuperuserFactory.
+    :return: SuperuserFactory
+    """
+    yield SuperuserFactory
 
 
 @pytest.fixture
@@ -73,6 +104,33 @@ def admin_api_client(api_client, superuser):
     api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
 
     yield api_client
+
+
+@pytest.fixture
+def author_model():
+    """
+    Fixture to provide an Author model.
+    :return: Author model
+    """
+    yield Author
+
+
+@pytest.fixture
+def genre_model():
+    """
+    Fixture to provide an Genre model.
+    :return: Genre model
+    """
+    yield Genre
+
+
+@pytest.fixture
+def book_model():
+    """
+    Fixture to provide an Book model.
+    :return: Book model
+    """
+    yield Book
 
 
 @pytest.fixture
@@ -179,6 +237,24 @@ def temp_image_file():
 
 
 @pytest.fixture
+def cart_model():
+    """
+    Fixture to provide an Cart model.
+    :return: Cart model
+    """
+    yield Cart
+
+
+@pytest.fixture
+def cart_item_model():
+    """
+    Fixture to provide an CartItem model.
+    :return: CartItem model
+    """
+    yield CartItem
+
+
+@pytest.fixture
 def cart_data():
     """
     Fixture to provide Cart data.
@@ -230,6 +306,24 @@ def cart_item_factory():
     :return: CartItemFactory
     """
     return CartItemFactory
+
+
+@pytest.fixture
+def order_model():
+    """
+    Fixture to provide an Order model.
+    :return: Order model
+    """
+    yield Order
+
+
+@pytest.fixture
+def order_item_model():
+    """
+    Fixture to provide an OrderItem model.
+    :return: OrderItem model
+    """
+    yield OrderItem
 
 
 @pytest.fixture
