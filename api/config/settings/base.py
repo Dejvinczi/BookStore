@@ -39,6 +39,11 @@ CORS_ALLOWED_ORIGINS = config(
 )
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="http://127.0.0.1:3000,http://localhost:3000",
+    cast=Csv(),
+)
 # Application definition
 
 INSTALLED_APPS = [
