@@ -10,6 +10,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
       - DATABASE_HOST=${DB_HOST}
       - DATABASE_PORT=${DB_PORT}
       - DATABASE_NAME=${DB_NAME}
@@ -29,8 +30,8 @@ services:
       - ./api/pyproject.toml:/api/pyproject.toml
       - ./api/.flake8:/api/.flake8
       - ./api/conftest.py:/api/conftest.py
-      - ./api/static:/api/static
-      - ./api/media:/api/media
+      - static:/api/static
+      - media:/api/media
     depends_on:
       - db
 
@@ -58,4 +59,6 @@ services:
   #     - /app/node_modules
 
 volumes:
+  static:
+  media:
   db-data:
