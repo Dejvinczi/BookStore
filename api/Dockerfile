@@ -1,5 +1,5 @@
 ########################### BASE #################################
-FROM python:3.12 as base
+FROM python:3.12 AS base
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -20,7 +20,7 @@ ENTRYPOINT ["bash"]
 
 
 ####################### DEVELOPMENT ##############################
-FROM base as development
+FROM base AS development
 
 ENV DJANGO_SETTINGS_MODULE=config.settings.development
  
@@ -39,7 +39,7 @@ ENTRYPOINT ["./run.sh"]
 
 
 ######################## PRODUCTION ##############################
-FROM base as production
+FROM base AS production
 
 ENV DJANGO_SETTINGS_MODULE=config.settings.production
 
