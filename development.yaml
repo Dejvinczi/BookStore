@@ -45,17 +45,17 @@ services:
     volumes:
       - dev-db-data:/var/lib/postgresql/data
 
-  app:
-    build:
-      context: app
-      dockerfile: Dockerfile
-    environment:
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./app:/app
-      - /app/node_modules
+  # app:
+  #   build:
+  #     context: app
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./app:/app
+  #     - /app/node_modules
 
 volumes:
   dev-db-data:
