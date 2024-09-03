@@ -1,6 +1,17 @@
 name: "bookstore-prod"
 
 services:
+  proxy:
+    build: ./proxy
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "1337:80"
+    depends_on:
+      - api
+    restart: always
+
   api:
     build:
       context: api
@@ -17,8 +28,12 @@ services:
       - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
     ports:
       - "8000:8000"
+    volumes:
+      - static:/api/static
+      - media:/api/media
+    depends_on:
+      - db
     restart: always
-
 
   db:
     image: postgres:16
@@ -29,8 +44,10 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - prod-db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
     restart: always
 
 volumes:
-  prod-db-data:
+  static:
+  media:
+  db-data:
