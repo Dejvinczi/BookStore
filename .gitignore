@@ -38,5 +38,6 @@ coverage.xml
 # IDE
 .vscode/
 
-# Media
-media
+# Media & Static
+media/
+static/
