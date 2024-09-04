@@ -44,11 +44,14 @@ class TestAuthorViewSet:
 
     def test_list_with_filter_last_name_success(self, api_client, author_factory):
         """Test that the list of authors can be filtered by last name."""
-        authors = author_factory.create_batch(5)
-        first_author = authors[0]
+        author_factory.create_batch(5)
+        custom_author = author_factory(
+            last_name="nonexistinglastname",
+        )
+
         response = api_client.get(
             f"{self.AUTHOR_LIST_URL}",
-            {"last_name": first_author.last_name},
+            {"last_name": custom_author.last_name},
         )
         assert response.status_code == status.HTTP_200_OK
         assert response.data["count"] == 1
