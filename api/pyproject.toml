@@ -12,6 +12,7 @@ omit = [
     "*/tests/*",
     "*/test_*.py",
     "*_tests.py",
+    "*/management/commands/*",
     "apps/core/scheme.py",
 ]
 
