@@ -41,6 +41,11 @@ class OrderSerializer(serializers.ModelSerializer):
     """Serializer for the Order model."""
 
     status = serializers.CharField(read_only=True)
+    total_price = serializers.DecimalField(
+        read_only=True,
+        max_digits=10,
+        decimal_places=2,
+    )
 
     class Meta:
         model = Order
