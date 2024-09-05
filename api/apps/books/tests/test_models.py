@@ -2,7 +2,7 @@ import pytest
 from ..models import Author, Genre, Book
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestAuthorModel:
     """Tests for the Author model in the system."""
 
@@ -20,7 +20,7 @@ class TestAuthorModel:
         assert str(author) == excepted_str
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestGenreModel:
     """Tests for the Genre model in the system."""
 
@@ -38,7 +38,7 @@ class TestGenreModel:
         assert str(genre) == excepted_str
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestBookModel:
     """Tests for the Book model in the system."""
 

@@ -2,7 +2,7 @@ import pytest
 from ..models import Order, OrderItem
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestOrderModel:
     """Tests for the Order model in the system."""
 
@@ -34,7 +34,7 @@ class TestOrderModel:
         )
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestOrderItemModel:
     """Tests for the OrderItem model in the system."""
 

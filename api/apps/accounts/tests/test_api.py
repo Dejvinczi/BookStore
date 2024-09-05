@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestRegisterView:
     """Tests for the register view."""
 
@@ -44,7 +44,7 @@ class TestRegisterView:
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestLoginView:
     """Tests for the login view."""
 
@@ -93,7 +93,7 @@ class TestLoginView:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestLoginRefreshView:
     """Tests for the login (token) refresh view."""
 
@@ -129,7 +129,7 @@ class TestLoginRefreshView:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestLogoutView:
 
     LOGOUT_URL = reverse("accounts:logout")
@@ -168,7 +168,7 @@ class TestLogoutView:
         assert response.status_code == status.HTTP_401_UNAUTHORIZED
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestProfileView:
     """Tests for the user profile view."""
 

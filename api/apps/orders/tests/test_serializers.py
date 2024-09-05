@@ -3,7 +3,7 @@ from rest_framework import serializers
 from ..serializers import OrderItemSerializer
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestOrderItemSerializer:
     """Test OrderItemSerializer."""
 

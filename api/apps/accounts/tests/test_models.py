@@ -1,7 +1,7 @@
 import pytest
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestUserModel:
     """Tests for the User model in the system."""
 

@@ -3,7 +3,7 @@ from django.urls import reverse
 from rest_framework import status
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestCartAPIView:
     """Tests for the Cart API."""
 
@@ -43,7 +43,7 @@ class TestCartAPIView:
         assert response.data["total_price"] == str(total_price)
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestCartItemViewSet:
     """Tests for CartItemViewSet."""
 

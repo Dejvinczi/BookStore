@@ -6,7 +6,7 @@ from django.utils import timezone
 from rest_framework import status
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestAuthorViewSet:
     """Tests for the AuthorViewSet."""
 
@@ -218,7 +218,7 @@ class TestAuthorViewSet:
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestGenreViewSet:
     """Tests for the GenreViewSet."""
 
@@ -328,7 +328,7 @@ class TestGenreViewSet:
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestBookViewSet:
     """Tests for the BookViewSet."""
 

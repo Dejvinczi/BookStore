@@ -2,7 +2,7 @@ import pytest
 from ..models import Cart, CartItem
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestCartModel:
     """Tests for the Cart model."""
 
@@ -34,7 +34,7 @@ class TestCartModel:
         )
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestCartItemModel:
     """Tests for the CartItem model."""
 
