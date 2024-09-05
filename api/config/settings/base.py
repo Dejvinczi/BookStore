@@ -278,3 +278,4 @@ LOGGING = {
         },
     },
 }
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
