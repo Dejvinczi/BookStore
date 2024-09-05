@@ -69,6 +69,17 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    docker-compose -f production.yml build
    ```
 
+4. Create superuser account using custom management command (create superuser account with cart):
+
+   4.1. In seperate terminal run container (dev|test|prod - depending on composition):
+   ```
+   docker-compose exec -it bookstore-<dev|test|prod>-api-1 bash
+   ```
+
+   4.2 Run command and follow instructions:
+   ```
+   python manage.py createsuperuser
+   ```
 ## Usage
 
 1. Navigate to the root directory of the repository:
@@ -108,7 +119,7 @@ You can run tests with coverage using `pytest` on the testing server:
 
 3. In another terminal attach to the development api server console:
    ```
-   docker-compose -f exec -it bookstore-test-api-1 bash
+   docker-compose exec -it bookstore-test-api-1 bash
    ```
 
 4. Run tests:
