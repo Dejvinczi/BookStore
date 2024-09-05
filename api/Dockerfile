@@ -31,7 +31,9 @@ COPY requirements/development.txt requirements/development.txt
 RUN pip install -r requirements/development.txt
 
 COPY scripts/dev-run.sh ./run.sh
+COPY scripts/worker-run.sh ./worker-run.sh
 RUN chmod +x ./run.sh
+RUN chmod +x ./worker-run.sh
 
 EXPOSE 5678
 
@@ -47,6 +49,8 @@ COPY requirements/production.txt requirements/production.txt
 RUN pip install -r requirements/production.txt
 
 COPY /scripts/prod-run.sh ./run.sh
+COPY scripts/worker-run.sh ./worker-run.sh
 RUN chmod +x ./run.sh
+RUN chmod +x ./worker-run.sh
 
 ENTRYPOINT ["./run.sh"]
