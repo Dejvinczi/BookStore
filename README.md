@@ -18,17 +18,21 @@ BookStore is a comprehensive web application for an online bookstore, serving as
 - Extensive book catalog with search and filter functionality
 - User registration and authentication system
 - Shopping cart and order management
+- Sending order confirmation emails to users
 - *in progres...*
 
 ## Technologies
 
-- Backend: Python 3.12, Django 5.0, Django REST Framework 3.15
-- Frontend: Next.js 14.2, React 18
-- Database: PostgreSQL 16.0
-- Authentication: SimpleJWT 5.3
-- Testing: pytest-django 4.8
-- Server: Nginx 1.27, Gunicorn 22.0
-- Containerization: Docker, Docker Compose
+- Backend: Python v3.12, Django v5.0, Django REST Framework v3.15
+- Frontend: Next.js v14.2, React v18
+- Database: PostgreSQL v16.0
+- Authentication: SimpleJWT v5.3
+- Testing: pytest-django v4.8
+- Server: Gunicorn v22.0
+- Proxy: Nginx v1.27
+- Containerization: Docker v27.2, Docker Compose v2.22
+- Distributed Task Queue: Celery v5.4.0
+- Message Broker: Redis v7.4
 - *in progres...*
 
 ## Getting Started
@@ -45,17 +49,23 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    git clone https://github.com/dejvinczi/bookstore.git
    cd bookstore
    ```
-2. Create .env file from .env.template:
+2. Create .env file from .env.template and edit it:
    ```
    cp .env.template .env
    ```
 
-3. Build and run the Docker containers:
+3. Build the Docker containers (choose one of the following as appropriate):
+   
+   3.1. Development composition:
    ```
-   # development
-   docker-compose -f development.yml build 
-
-   # production
+   docker-compose -f development.yml build
+   ```
+   3.2. Testing composition:
+   ```
+   docker-compose -f testing.yml build
+   ```
+   3.3. Production composition:
+   ```
    docker-compose -f production.yml build
    ```
 
@@ -66,18 +76,24 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    cd bookstore
    ```
 
-2. Run docker containers:
+3. Run the Docker containers (choose one of the following as appropriate):
+   
+   3.1. Development composition:
    ```
-   # development
-   docker-compose -f development.yml up 
-
-   # production
+   docker-compose -f development.yml up
+   ```
+   3.2. Testing composition:
+   ```
+   docker-compose -f testing.yml up
+   ```
+   3.3. Production composition:
+   ```
    docker-compose -f production.yml up
    ```
 
 ## Testing
 
-You can run tests with coverage using `pytest` on the development server:
+You can run tests with coverage using `pytest` on the testing server:
 
 
 1. Navigate to the root directory of the repository:
@@ -85,14 +101,14 @@ You can run tests with coverage using `pytest` on the development server:
    cd bookstore
    ```
 
-2. Run docker development composition:
+2. Run docker testing composition:
    ```
-   docker-compose -f development.yml up 
+   docker-compose -f testing.yml up 
    ```
 
 3. In another terminal attach to the development api server console:
    ```
-   docker-compose -f exec -it bookstore-dev-api-1 bash
+   docker-compose -f exec -it bookstore-test-api-1 bash
    ```
 
 4. Run tests:
