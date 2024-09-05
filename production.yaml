@@ -28,6 +28,8 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}   
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}      
       - DATABASE_HOST=${DB_HOST}
       - DATABASE_PORT=${DB_PORT}
       - DATABASE_NAME=${DB_NAME}
@@ -39,6 +41,41 @@ services:
     depends_on:
       - db
     restart: always
+  
+  worker:
+    build:
+      context: api
+      dockerfile: Dockerfile
+      target: production
+    entrypoint: ./worker-run.sh
+    volumes:
+      - static:/api/static
+      - media:/api/media
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}   
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
+      - PYDEVD_DISABLE_FILE_VALIDATION=1
+    depends_on:
+      - api
+      - redis
+
+  redis:
+    image: redis:7.4-alpine
 
   db:
     image: postgres:16
@@ -51,6 +88,7 @@ services:
     restart: always
 
 volumes:
+  logs:
   static:
   media:
   db-data:
