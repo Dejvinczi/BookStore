@@ -1,9 +1,11 @@
 import pytest
+
+# from django.core import mail
 from django.urls import reverse
 from django.utils.translation import gettext as _
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 class TestOrderViewSet:
     """Test OrderViewSet."""
 
@@ -70,8 +72,11 @@ class TestOrderViewSet:
         cart_item_factory,
         auth_api_client,
         order_model,
+        settings,
+        mailoutbox,
     ):
         """Test create new order based on user cart success."""
+
         cart = user.cart
         cart_item_factory.create_batch(2, cart=cart)
         cart_total_price = cart.total_price
@@ -94,6 +99,17 @@ class TestOrderViewSet:
         assert order.status == order_model.StatusChoices.IN_PROGRESS
         assert order.total_price == cart_total_price
         assert order.items.count() == 2
+        assert len(mailoutbox) == 1
+
+        email = mailoutbox[0]
+
+        assert email.subject == f"Order {order.no} changed status"
+        assert (
+            email.body
+            == f"Hello {user.username},\n\nYour order {order.no} has changed status to: {order.status}"
+        )
+        assert email.from_email == settings.DEFAULT_FROM_EMAIL
+        assert email.to == [user.email]
 
     def test_create_with_empty_cart_fail(self, auth_api_client):
         """Test create new order with empty cart fail."""
