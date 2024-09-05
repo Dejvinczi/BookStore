@@ -69,14 +69,13 @@ ENV DJANGO_SETTINGS_MODULE=config.settings.testing
 # Copy testing-specific files
 COPY conftest.py ./conftest.py
 COPY pyproject.toml ./pyproject.toml
-COPY .flake8 ./.flake8
 COPY requirements/testing.txt ./requirements/testing.txt
 
 # Install testing dependencies
 RUN pip install --no-cache-dir -r ./requirements/testing.txt
 
 # Copy and set up scripts
-COPY scripts/dev-run.sh ./run.sh
+COPY scripts/test-run.sh ./run.sh
 COPY scripts/worker-run.sh ./worker-run.sh
 RUN chmod +x ./run.sh ./worker-run.sh
 
