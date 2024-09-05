@@ -35,8 +35,6 @@ services:
       - DATABASE_USER=${DB_USER}
       - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
       - PYDEVD_DISABLE_FILE_VALIDATION=1
-    ports:
-      - "8000:8000"
     volumes:
       - logs:/api/logs
       - static:/api/static
