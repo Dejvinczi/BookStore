@@ -1,0 +1,108 @@
+name: "bookstore-test"
+
+services:
+  proxy:
+    build: ./proxy
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "1337:80"
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+      target: testing
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
+      - PYDEVD_DISABLE_FILE_VALIDATION=1
+    ports:
+      - "8000:8000"
+    volumes:
+      - logs:/api/logs
+      - static:/api/static
+      - media:/api/media
+    depends_on:
+      - db
+
+  worker:
+    build:
+      context: api
+      dockerfile: Dockerfile
+      target: testing
+    entrypoint: ./worker-run.sh
+    volumes:
+      - logs:/api/logs
+      - static:/api/static
+      - media:/api/media
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS}
+      - CSRF_TRUSTED_ORIGINS=${CSRF_TRUSTED_ORIGINS}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}   
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+      - DATABASE_NAME=${DB_NAME}
+      - DATABASE_USER=${DB_USER}
+      - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
+      - PYDEVD_DISABLE_FILE_VALIDATION=1
+    depends_on:
+      - api
+      - redis
+
+  redis:
+    image: redis:7.4-alpine
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_USER_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  # app:
+  #   build:
+  #     context: app
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./app:/app
+  #     - /app/node_modules
+
+volumes:
+  logs:
+  static:
+  media:
+  db-data:
