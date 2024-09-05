@@ -1,5 +1,5 @@
-from ..helpers import book_image_upload_to_path
 from unittest.mock import Mock
+from ..helpers import book_image_upload_to_path
 
 
 def test_book_image_upload_to_path():
