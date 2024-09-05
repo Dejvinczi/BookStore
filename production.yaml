@@ -36,6 +36,7 @@ services:
       - DATABASE_USER=${DB_USER}
       - DATABASE_USER_PASSWORD=${DB_USER_PASSWORD}
     volumes:
+      - logs:/api/logs
       - static:/api/static
       - media:/api/media
     depends_on:
@@ -49,6 +50,7 @@ services:
       target: production
     entrypoint: ./worker-run.sh
     volumes:
+      - logs:/api/logs
       - static:/api/static
       - media:/api/media
     environment:
@@ -75,7 +77,8 @@ services:
       - redis
 
   redis:
-    image: redis:7.4-alpine
+    image: redis:7.4
+    restart: always
 
   db:
     image: postgres:16
