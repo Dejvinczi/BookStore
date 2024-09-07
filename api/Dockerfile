@@ -55,8 +55,11 @@ EXPOSE 5678
 RUN chown -R api-user:api-user /api
 USER api-user
 
+# Update PATH with scripts directory
+ENV PATH="$PATH:/api/scripts"
+
 # Set entrypoint
-ENTRYPOINT ["./scripts/dev-run.sh"]
+ENTRYPOINT ["dev-run.sh"]
 
 
 ####################### TESTING ##############################
@@ -81,8 +84,11 @@ RUN chmod -R +x ./scripts
 RUN chown -R api-user:api-user /api
 USER api-user
 
+# Update PATH with scripts directory
+ENV PATH="$PATH:/api/scripts"
+
 # Set entrypoint
-ENTRYPOINT ["./scripts/test-run.sh"]
+ENTRYPOINT ["test-run.sh"]
 
 
 ######################## PRODUCTION ##############################
@@ -108,5 +114,8 @@ RUN chmod -R +x ./scripts
 RUN chown -R api-user:api-user /api
 USER api-user
 
+# Update PATH with scripts directory
+ENV PATH="$PATH:/api/scripts"
+
 # Set entrypoint
-ENTRYPOINT ["./scripts/prod-run.sh"]
+ENTRYPOINT ["prod-run.sh"]
