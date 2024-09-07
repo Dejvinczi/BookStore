@@ -45,9 +45,8 @@ COPY requirements/development.txt ./requirements/development.txt
 RUN pip install --no-cache-dir -r ./requirements/development.txt
 
 # Copy and set up scripts
-COPY scripts/dev-run.sh ./run.sh
-COPY scripts/worker-run.sh ./worker-run.sh
-RUN chmod +x ./run.sh ./worker-run.sh
+COPY scripts ./scripts
+RUN chmod -R +x ./scripts
 
 # Expose debugger port
 EXPOSE 5678
@@ -57,7 +56,7 @@ RUN chown -R api-user:api-user /api
 USER api-user
 
 # Set entrypoint
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["./scripts/dev-run.sh"]
 
 
 ####################### TESTING ##############################
@@ -75,16 +74,15 @@ COPY requirements/testing.txt ./requirements/testing.txt
 RUN pip install --no-cache-dir -r ./requirements/testing.txt
 
 # Copy and set up scripts
-COPY scripts/test-run.sh ./run.sh
-COPY scripts/worker-run.sh ./worker-run.sh
-RUN chmod +x ./run.sh ./worker-run.sh
+COPY scripts ./scripts
+RUN chmod -R +x ./scripts
 
 # Set ownership and switch to non-root user
 RUN chown -R api-user:api-user /api
 USER api-user
 
 # Set entrypoint
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["./scripts/test-run.sh"]
 
 
 ######################## PRODUCTION ##############################
@@ -99,17 +97,16 @@ RUN find /api -type d -name 'tests' -exec rm -rf {} +
 # Copy production-specific files
 COPY requirements/production.txt ./requirements/production.txt
 
-# Copy and install production dependencies
+# Install production dependencies
 RUN pip install -r ./requirements/production.txt
 
 # Copy and set up scripts
-COPY scripts/prod-run.sh ./run.sh
-COPY scripts/worker-run.sh ./worker-run.sh
-RUN chmod +x ./run.sh ./worker-run.sh
+COPY scripts ./scripts
+RUN chmod -R +x ./scripts
 
 # Set ownership and switch to non-root user
 RUN chown -R api-user:api-user /api
 USER api-user
 
 # Set entrypoint
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["./scripts/prod-run.sh"]
