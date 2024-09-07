@@ -59,15 +59,15 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    
    3.1. Development composition:
    ```
-   docker-compose -f development.yml build
+   docker-compose -f development.yaml build
    ```
    3.2. Testing composition:
    ```
-   docker-compose -f testing.yml build
+   docker-compose -f testing.yaml build
    ```
    3.3. Production composition:
    ```
-   docker-compose -f production.yml build
+   docker-compose -f production.yaml build
    ```
 ## Usage
 
@@ -80,15 +80,15 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    
    3.1. Development composition:
    ```
-   docker-compose -f development.yml up
+   docker-compose -f development.yaml up
    ```
    3.2. Testing composition:
    ```
-   docker-compose -f testing.yml up
+   docker-compose -f testing.yaml up
    ```
    3.3. Production composition:
    ```
-   docker-compose -f production.yml up
+   docker-compose -f production.yaml up
    ```
 
 ## Testing
@@ -103,7 +103,7 @@ You can run tests with coverage using `pytest` on the testing server:
 
 2. Run docker testing composition:
    ```
-   docker-compose -f testing.yml up 
+   docker-compose -f testing.yaml up 
    ```
 
 3. In another terminal run the following command:
