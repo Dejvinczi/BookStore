@@ -15,6 +15,7 @@ BookStore is a comprehensive web application for an online bookstore, serving as
 
 ## Features
 
+- Automatic creation of superuser based on environment variables
 - Extensive book catalog with search and filter functionality
 - User registration and authentication system
 - Shopping cart and order management
@@ -105,15 +106,11 @@ You can run tests with coverage using `pytest` on the testing server:
    docker-compose -f testing.yml up 
    ```
 
-3. In another terminal attach to the development api server console:
+3. In another terminal run the following command:
    ```
-   docker-compose exec -it bookstore-test-api-1 bash
+   docker exec -it bookstore-test-api-1 pytest
    ```
 
-4. Run tests:
-   ```
-   pytest
-   ```
 
 ## API Documentation
 
