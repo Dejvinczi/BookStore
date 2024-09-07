@@ -50,7 +50,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: testing
-    entrypoint: ./worker-run.sh
+    entrypoint: ./scripts/worker-run.sh
     volumes:
       - logs:/api/logs
       - static:/api/static

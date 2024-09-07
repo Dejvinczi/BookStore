@@ -51,7 +51,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: production
-    entrypoint: ./worker-run.sh
+    entrypoint: ./scripts/worker-run.sh
     volumes:
       - logs:/api/logs
       - static:/api/static
