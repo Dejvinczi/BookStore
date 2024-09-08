@@ -108,7 +108,7 @@ You can run tests with coverage using `pytest` on the testing server:
 
 3. In another terminal run the following command:
    ```
-   docker exec -it bookstore-test-api-1 pytest
+   docker-compose -f testing.yaml exec api pytest
    ```
 
 
