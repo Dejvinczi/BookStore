@@ -77,4 +77,5 @@ jobs:
         
         - name: Execute tests in the running services
           run: |
+            du -h
             docker compose -f testing.yaml exec api pytest
