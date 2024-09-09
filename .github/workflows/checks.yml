@@ -1,4 +1,4 @@
-name: API-CI
+name: BookStore-CI
 
 on:
   push:
@@ -77,5 +77,4 @@ jobs:
         
         - name: Execute tests in the running services
           run: |
-            df -h
             docker compose -f testing.yaml exec api pytest
