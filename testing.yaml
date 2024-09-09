@@ -39,7 +39,6 @@ services:
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
       - PYDEVD_DISABLE_FILE_VALIDATION=1
     volumes:
-      - logs:/api/logs
       - static:/api/static
       - media:/api/media
     depends_on:
@@ -52,7 +51,6 @@ services:
       target: testing
     entrypoint: ./scripts/worker-run.sh
     volumes:
-      - logs:/api/logs
       - static:/api/static
       - media:/api/media
     environment:
@@ -87,8 +85,6 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_USER_PASSWORD}
-    volumes:
-      - db-data:/var/lib/postgresql/data
 
   # app:
   #   build:
@@ -103,7 +99,5 @@ services:
   #     - /app/node_modules
 
 volumes:
-  logs:
   static:
   media:
-  db-data:
