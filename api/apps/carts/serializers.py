@@ -4,7 +4,7 @@ from apps.books.serializers import BookListSerializer
 from .models import Cart, CartItem
 
 
-class CartItemSerializer(serializers.ModelSerializer):
+class BaseCartItemSerializer(serializers.ModelSerializer):
     """Base serializer for the CartItem model."""
 
     total_price = serializers.DecimalField(
@@ -26,32 +26,32 @@ class CartItemSerializer(serializers.ModelSerializer):
         return value
 
 
-class CartItemListSerializer(CartItemSerializer):
+class CartItemListSerializer(BaseCartItemSerializer):
     """Serializer for listing the CartItem model isntances."""
 
     book = BookListSerializer(read_only=True)
 
-    class Meta(CartItemSerializer.Meta):
-        model = CartItem
+    class Meta(BaseCartItemSerializer.Meta):
         fields = ("id", "book", "quantity", "total_price")
+        read_only_fields = fields
 
 
-class CartItemCreateSerializer(CartItemSerializer):
+class CartItemCreateSerializer(BaseCartItemSerializer):
     """Serializer for the creation of the CartItem model."""
 
-    class Meta(CartItemSerializer.Meta):
+    class Meta(BaseCartItemSerializer.Meta):
         fields = ("book", "quantity")
         extra_kwargs = {"quantity": {"read_only": True}}
 
 
-class CartItemUpdateSerializer(CartItemSerializer):
+class CartItemUpdateSerializer(BaseCartItemSerializer):
     """Serializer for the update of the CartItem model."""
 
-    class Meta(CartItemSerializer.Meta):
+    class Meta(BaseCartItemSerializer.Meta):
         fields = ("quantity",)
 
 
-class CartSerializer(serializers.ModelSerializer):
+class BaseCartSerializer(serializers.ModelSerializer):
     """Serializer for the Cart model."""
 
     total_price = serializers.DecimalField(
@@ -65,10 +65,11 @@ class CartSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class CartRetrieveSerializer(CartSerializer):
+class CartRetrieveSerializer(BaseCartSerializer):
     """Serializer for the retrieve single Cart model instance."""
 
     items = CartItemListSerializer(many=True, read_only=True)
 
-    class Meta(CartSerializer.Meta):
+    class Meta(BaseCartSerializer.Meta):
         fields = ("items", "total_price")
+        read_only_fields = fields

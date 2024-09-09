@@ -4,12 +4,12 @@ from rest_framework import serializers
 from .models import Author, Genre, Book
 
 
-class AuthorSerializer(serializers.ModelSerializer):
-    """Serializer for the Author model."""
+class BaseAuthorSerializer(serializers.ModelSerializer):
+    """Base serializer for the Author model."""
 
     class Meta:
         model = Author
-        fields = ("id", "first_name", "last_name", "date_of_birth")
+        fields = "__all__"
 
     def validate_date_of_birth(self, value):
         """Validation of date of birth."""
@@ -20,29 +20,34 @@ class AuthorSerializer(serializers.ModelSerializer):
         return value
 
 
-class GenreSerializer(serializers.ModelSerializer):
-    """Serializer for the Genre model."""
+class AuthorSerializer(BaseAuthorSerializer):
+    """Serializer for the Author model."""
+
+    class Meta(BaseAuthorSerializer.Meta):
+        fields = ("id", "first_name", "last_name", "date_of_birth")
+
+
+class BaseGenreSerializer(serializers.ModelSerializer):
+    """Base serializer for the Genre model."""
 
     class Meta:
         model = Genre
+        fields = "__all__"
+
+
+class GenreSerializer(BaseGenreSerializer):
+    """Serializer for the Genre model."""
+
+    class Meta(BaseGenreSerializer.Meta):
         fields = ("id", "name")
 
 
-class BookSerializer(serializers.ModelSerializer):
-    """Serializer for the Book model."""
+class BaseBookSerializer(serializers.ModelSerializer):
+    """Base serializer for the Book model."""
 
     class Meta:
         model = Book
-        fields = (
-            "id",
-            "title",
-            "authors",
-            "genres",
-            "publication_date",
-            "image",
-            "price",
-        )
-        extra_kwargs = {"image": {"read_only": True}}
+        fields = "__all__"
 
     def validate_publication_date(self, value):
         """Validation of publication date."""
@@ -61,29 +66,73 @@ class BookSerializer(serializers.ModelSerializer):
         return value
 
 
-class BookListSerializer(BookSerializer):
-    """Serializer for the Book model list."""
+class BookCreateSerializer(BaseBookSerializer):
+    """Serializer for the Book model creation."""
+
+    class Meta(BaseBookSerializer.Meta):
+        fields = (
+            "title",
+            "authors",
+            "genres",
+            "publication_date",
+            "price",
+        )
+
+
+class BookListSerializer(BaseBookSerializer):
+    """Serializer for the Book model listing."""
 
     authors = serializers.StringRelatedField(many=True)
     genres = serializers.StringRelatedField(many=True)
 
-    class Meta(BookSerializer.Meta):
-        read_only_fields = BookSerializer.Meta.fields
+    class Meta(BaseBookSerializer.Meta):
+        fields = (
+            "id",
+            "title",
+            "authors",
+            "genres",
+            "publication_date",
+            "image",
+            "price",
+        )
+        read_only_fields = fields
 
 
-class BookRetrieveSerializer(BookSerializer):
-    """Serializer for Book model details."""
+class BookRetrieveSerializer(BaseBookSerializer):
+    """Serializer for the Book model retrieving."""
 
     authors = AuthorSerializer(many=True, read_only=True)
     genres = GenreSerializer(many=True, read_only=True)
 
-    class Meta(BookSerializer.Meta):
-        read_only_fields = BookSerializer.Meta.fields
+    class Meta(BaseBookSerializer.Meta):
+        fields = (
+            "id",
+            "title",
+            "authors",
+            "genres",
+            "publication_date",
+            "image",
+            "price",
+        )
+        read_only_fields = fields
 
 
-class BookUploadImageSerializer(serializers.ModelSerializer):
+class BookUpdateSerializer(BaseBookSerializer):
+    """Serializer for Book model updating."""
+
+    class Meta(BaseBookSerializer.Meta):
+        fields = (
+            "id",
+            "title",
+            "authors",
+            "genres",
+            "publication_date",
+            "price",
+        )
+
+
+class BookUploadImageSerializer(BaseBookSerializer):
     """Serializer for uploading an image to the Book model."""
 
-    class Meta:
-        model = Book
+    class Meta(BaseBookSerializer.Meta):
         fields = ("image",)

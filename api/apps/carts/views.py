@@ -3,16 +3,14 @@ from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
 from .models import Cart, CartItem
 from .serializers import (
+    BaseCartItemSerializer,
     CartRetrieveSerializer,
     CartItemCreateSerializer,
     CartItemUpdateSerializer,
 )
 
 
-class CartAPIView(
-    mixins.RetrieveModelMixin,
-    generics.GenericAPIView,
-):
+class CartAPIView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     """View for the user cart."""
 
     queryset = Cart.objects.prefetch_related(
@@ -43,20 +41,19 @@ class CartItemViewSet(
     """Viewset for the CartItem model."""
 
     queryset = CartItem.objects.all()
-    serializer_class = CartItemCreateSerializer
-
-    def get_queryset(self):
-        """Get current user cart items."""
-        request_user = self.request.user
-        queryset = CartItem.objects.filter(cart__user=request_user)
-        return queryset
+    serializer_class = BaseCartItemSerializer
+    action_serializer_classes = {
+        "create": CartItemCreateSerializer,
+        "update": CartItemUpdateSerializer,
+        "partial_update": CartItemUpdateSerializer,
+    }
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
-        if self.action in ["partial_update", "update"]:
-            return CartItemUpdateSerializer
-
-        return self.serializer_class
+        serializer_class = self.action_serializer_classes.get(
+            self.action, self.serializer_class
+        )
+        return serializer_class
 
     def perform_create(self, serializer):
         """Create a new cart item for the current user cart."""

@@ -5,9 +5,11 @@ from rest_framework.response import Response
 from .tasks import send_order_change_status_email
 from .models import Order
 from .serializers import (
+    BaseOrderSerializer,
     OrderListSerializer,
-    OrderDetailSerializer,
-    OrderItemSerializer,
+    OrderRetrieveSerializer,
+    OrderCreateSerializer,
+    BaseOrderItemSerializer,
 )
 
 
@@ -19,7 +21,12 @@ class OrderViewSet(
     """View for orders."""
 
     queryset = Order.objects.prefetch_related("items", "items__book").all()
-    serializer_class = OrderDetailSerializer
+    serializer_class = BaseOrderSerializer
+    action_serializer_classes = {
+        "list": OrderListSerializer,
+        "retrieve": OrderRetrieveSerializer,
+        "create": OrderCreateSerializer,
+    }
 
     def get_queryset(self):
         """Get current user orders."""
@@ -27,10 +34,10 @@ class OrderViewSet(
 
     def get_serializer_class(self):
         """Get serializer class based on action."""
-        if self.action == "list":
-            return OrderListSerializer
-
-        return self.serializer_class
+        serializer_class = self.action_serializer_classes.get(
+            self.action, self.serializer_class
+        )
+        return serializer_class
 
     def perform_create(self, serializer):
         """Save the new order with the current user."""
@@ -62,7 +69,7 @@ class OrderViewSet(
                         "price": item.book.price,
                     }
                 )
-            order_item_serializer = OrderItemSerializer(data=order_items, many=True)
+            order_item_serializer = BaseOrderItemSerializer(data=order_items, many=True)
             order_item_serializer.is_valid(raise_exception=True)
             order_item_serializer.save()
 

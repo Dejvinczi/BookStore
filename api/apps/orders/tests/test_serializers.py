@@ -1,16 +1,16 @@
 import pytest
 from rest_framework import serializers
-from ..serializers import OrderItemSerializer
+from ..serializers import BaseOrderItemSerializer
 
 
 @pytest.mark.django_db(transaction=True)
-class TestOrderItemSerializer:
+class TestBaseOrderItemSerializer:
     """Test OrderItemSerializer."""
 
     @pytest.fixture(autouse=True)
     def setup_method(self, book, order):
         """Setup method."""
-        self.serializer = OrderItemSerializer
+        self.serializer = BaseOrderItemSerializer
         self.data = {
             "order": order.id,
             "book": book.id,

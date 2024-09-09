@@ -4,8 +4,14 @@ from apps.books.serializers import BookListSerializer
 from .models import Order, OrderItem
 
 
-class OrderItemSerializer(serializers.ModelSerializer):
-    """Serializer for the OrderItem model."""
+class BaseOrderItemSerializer(serializers.ModelSerializer):
+    """Base serializer for the OrderItem model."""
+
+    total_price = serializers.DecimalField(
+        read_only=True,
+        max_digits=10,
+        decimal_places=2,
+    )
 
     class Meta:
         model = OrderItem
@@ -28,19 +34,18 @@ class OrderItemSerializer(serializers.ModelSerializer):
         return value
 
 
-class OrderItemListSerializer(OrderItemSerializer):
+class OrderItemListSerializer(BaseOrderItemSerializer):
     """Serializer for listing the OrderItem model isntances."""
 
     book = BookListSerializer(read_only=True)
 
-    class Meta(OrderItemSerializer.Meta):
+    class Meta(BaseOrderItemSerializer.Meta):
         fields = ("id", "book", "quantity", "price")
 
 
-class OrderSerializer(serializers.ModelSerializer):
-    """Serializer for the Order model."""
+class BaseOrderSerializer(serializers.ModelSerializer):
+    """Base serializer for the Order model."""
 
-    status = serializers.CharField(read_only=True)
     total_price = serializers.DecimalField(
         read_only=True,
         max_digits=10,
@@ -50,19 +55,30 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
+        extra_kwargs = {
+            "no": {"read_only": True},
+            "status": {"read_only": True},
+        }
 
 
-class OrderListSerializer(OrderSerializer):
-    """Serializer for listing the Order model."""
+class OrderListSerializer(BaseOrderSerializer):
+    """Serializer for listing the Orders."""
 
-    class Meta(OrderSerializer.Meta):
+    class Meta(BaseOrderSerializer.Meta):
         fields = ("id", "no", "address", "status", "total_price")
 
 
-class OrderDetailSerializer(OrderSerializer):
-    """Serializer for detail the Order model."""
+class OrderRetrieveSerializer(BaseOrderSerializer):
+    """Serializer for retrieving the Order."""
 
     items = OrderItemListSerializer(many=True, read_only=True)
 
-    class Meta(OrderSerializer.Meta):
+    class Meta(BaseOrderSerializer.Meta):
         fields = ("id", "no", "address", "items", "status", "total_price")
+
+
+class OrderCreateSerializer(BaseOrderSerializer):
+    """Serializer for creating the Orders."""
+
+    class Meta(BaseOrderSerializer.Meta):
+        fields = ("id", "no", "address", "total_price")
