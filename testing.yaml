@@ -85,7 +85,9 @@ services:
       - POSTGRES_DB=${DATABASE_NAME}
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_USER_PASSWORD}
-
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      
   # app:
   #   build:
   #     context: app
@@ -101,3 +103,4 @@ services:
 volumes:
   static:
   media:
+  db-data:
