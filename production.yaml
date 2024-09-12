@@ -97,7 +97,8 @@ services:
   app:
     build:
       context: app
-      dockerfile: prod.Dockerfile
+      dockerfile: Dockerfile
+      target: production
     depends_on:
       - api
     restart: always
