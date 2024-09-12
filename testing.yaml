@@ -1,16 +1,6 @@
 name: "bookstore-test"
 
 services:
-  proxy:
-    build: ./proxy
-    volumes:
-      - static:/static
-      - media:/media
-    ports:
-      - "1337:80"
-    depends_on:
-      - api
-
   api:
     build:
       context: api

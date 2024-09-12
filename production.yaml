@@ -78,7 +78,8 @@ services:
     depends_on:
       - api
       - redis
-
+    restart: always
+    
   redis:
     image: redis:7.4
     restart: always
