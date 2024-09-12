@@ -6,6 +6,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: testing
+    entrypoint: ["entrypoint-testing.sh"]
     environment:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
@@ -27,7 +28,6 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
-      - PYDEVD_DISABLE_FILE_VALIDATION=1
     volumes:
       - static:/api/static
       - media:/api/media
@@ -39,7 +39,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: testing
-    entrypoint: ./scripts/worker-run.sh
+    entrypoint: ["entrypoint-celery-worker.sh"]
     volumes:
       - static:/api/static
       - media:/api/media
@@ -61,7 +61,6 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
-      - PYDEVD_DISABLE_FILE_VALIDATION=1
     depends_on:
       - api
       - redis
