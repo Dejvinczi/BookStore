@@ -78,7 +78,7 @@ COPY requirements/testing.txt ./requirements/testing.txt
 RUN pip install --no-cache-dir -r ./requirements/testing.txt
 
 # Copy and set up scripts
-COPY scripts/entrypoint-development.sh ./scripts/entrypoint-development.sh
+COPY scripts/entrypoint-testing.sh ./scripts/entrypoint-testing.sh
 COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh 
 COPY scripts/wait-for-it.sh ./scripts/wait-for-it.sh
 RUN chmod -R +x ./scripts

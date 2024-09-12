@@ -51,7 +51,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: production
-    entrypoint: ./scripts/worker-run.sh
+    entrypoint: ["entrypoint-celery-worker.sh"]
     volumes:
       - logs:/api/logs
       - static:/api/static
