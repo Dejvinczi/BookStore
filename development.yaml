@@ -92,6 +92,18 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
 
+  app:
+    build:
+      context: app
+      dockerfile: dev.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - /app/.next
+      - ./app:/app
+    depends_on:
+      - api
 
 volumes:
   logs:
