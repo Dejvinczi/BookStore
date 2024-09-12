@@ -11,10 +11,26 @@ RUN apk add --no-cache libc6-compat
 # Copy package.json file
 COPY package.json ./package.json
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 
-####################### BUILDER #############################
+####################### DEVELOPMENT ##############################
+FROM base AS development
+# Set development environment
+ENV NODE_ENV development
+# Set working directory
+WORKDIR /app
+# Copy dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+# Copy app
+COPY . .
+# Expose port
+EXPOSE 3000
+# Start server
+CMD [ "yarn", "dev" ]
+
+
+######################### BUILDER ################################
 FROM base AS builder
 # Set production environment
 ENV NODE_ENV=production
@@ -28,8 +44,8 @@ COPY . .
 RUN yarn build
 
 
-######################## RUNNER ##############################
-FROM base AS runner
+######################## PRODUCTION ##############################
+FROM base AS production
 # Set production environment
 ENV NODE_ENV production
 # Set working directory
