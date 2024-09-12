@@ -34,11 +34,11 @@ FROM base AS development
 
 # Set development-specific environment variables
 ENV DJANGO_SETTINGS_MODULE=config.settings.development
+ENV PYDEVD_DISABLE_FILE_VALIDATION=1
 
 # Copy development-specific files
 COPY conftest.py ./conftest.py
 COPY pyproject.toml ./pyproject.toml
-COPY .flake8 ./.flake8
 COPY requirements/development.txt ./requirements/development.txt
 
 # Install development dependencies
@@ -59,7 +59,7 @@ USER api-user
 ENV PATH="$PATH:/api/scripts"
 
 # Set entrypoint
-ENTRYPOINT ["dev-run.sh"]
+ENTRYPOINT ["entrypoint-development.sh"]
 
 
 ####################### TESTING ##############################
@@ -67,7 +67,8 @@ FROM base AS testing
 
 # Set testing-specific environment variables
 ENV DJANGO_SETTINGS_MODULE=config.settings.testing
- 
+ENV PYDEVD_DISABLE_FILE_VALIDATION=1
+
 # Copy testing-specific files
 COPY conftest.py ./conftest.py
 COPY pyproject.toml ./pyproject.toml
@@ -77,7 +78,9 @@ COPY requirements/testing.txt ./requirements/testing.txt
 RUN pip install --no-cache-dir -r ./requirements/testing.txt
 
 # Copy and set up scripts
-COPY scripts ./scripts
+COPY scripts/entrypoint-testing.sh ./scripts/entrypoint-testing.sh
+COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh 
+COPY scripts/wait-for-it.sh ./scripts/wait-for-it.sh
 RUN chmod -R +x ./scripts
 
 # Set ownership and switch to non-root user
@@ -88,7 +91,7 @@ USER api-user
 ENV PATH="$PATH:/api/scripts"
 
 # Set entrypoint
-ENTRYPOINT ["test-run.sh"]
+ENTRYPOINT ["entrypoint-testing.sh"]
 
 
 ######################## PRODUCTION ##############################
@@ -107,7 +110,9 @@ COPY requirements/production.txt ./requirements/production.txt
 RUN pip install -r ./requirements/production.txt
 
 # Copy and set up scripts
-COPY scripts ./scripts
+COPY scripts/entrypoint-production.sh ./scripts/entrypoint-production.sh
+COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh 
+COPY scripts/wait-for-it.sh ./scripts/wait-for-it.sh
 RUN chmod -R +x ./scripts
 
 # Set ownership and switch to non-root user
@@ -118,4 +123,4 @@ USER api-user
 ENV PATH="$PATH:/api/scripts"
 
 # Set entrypoint
-ENTRYPOINT ["prod-run.sh"]
+ENTRYPOINT ["entrypoint-production.sh"]

@@ -6,6 +6,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: development
+    entrypoint: ["entrypoint-development.sh"]
     environment:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
@@ -27,7 +28,6 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
-      - PYDEVD_DISABLE_FILE_VALIDATION=1
     ports:
       - "8000:8000"
       - "5678:5678"
@@ -50,8 +50,15 @@ services:
       context: api
       dockerfile: Dockerfile
       target: development
-    entrypoint: ./scripts/worker-run.sh
+    entrypoint: ["entrypoint-celery-worker.sh"]
     volumes:
+      - ./api/config:/api/config
+      - ./api/apps:/api/apps
+      - ./api/manage.py:/api/manage.py
+      - ./api/requirements/base.txt:/api/requirements/base.txt
+      - ./api/requirements/development.txt:/api/requirements/development.txt
+      - ./api/pyproject.toml:/api/pyproject.toml
+      - ./api/conftest.py:/api/conftest.py
       - logs:/api/logs
       - static:/api/static
       - media:/api/media
@@ -73,7 +80,6 @@ services:
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
-      - PYDEVD_DISABLE_FILE_VALIDATION=1
     depends_on:
       - api
       - redis
