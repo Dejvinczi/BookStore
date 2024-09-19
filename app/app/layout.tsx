@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
-import Header from '@components/Header';
-import Footer from '@components/Footer';
-import '@styles/globals.css';
+import type { Metadata } from "next";
+import Header from "@components/Header";
+import Footer from "@components/Footer";
+import "@styles/globals.css";
 
 export const metadata: Metadata = {
-  title: 'BookSotre',
-  description: 'Your favorite bookstore',
+  title: "BookSotre",
+  description: "Your favorite bookstore",
   icons: {
-    icon: '/favicon.ico',
+    icon: "/favicon.ico",
   },
 };
 
