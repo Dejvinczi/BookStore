@@ -7,7 +7,7 @@ export default function Header() {
       <div className='grid grid-cols-3 md:grid-cols-3 items-center'>
         <Link href='/' className='flex items-center'>
           <Image
-            src='/android-chrome-192x192.png'
+            src='/android-chrome-512x512.png'
             alt='Logo'
             width={26}
             height={26}
