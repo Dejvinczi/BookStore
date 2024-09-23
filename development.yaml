@@ -109,6 +109,10 @@ services:
       - /app/node_modules
       - /app/.next
       - ./app:/app
+    environment:
+      - NEXT_PUBLIC_API_PROTOCOL=${NEXT_PUBLIC_API_PROTOCOL}
+      - NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST}
+      - NEXT_PUBLIC_API_PORT=${NEXT_PUBLIC_API_PORT}
     depends_on:
       - api
 

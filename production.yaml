@@ -10,6 +10,7 @@ services:
       - "1337:80"
     depends_on:
       - api
+      - app
     restart: always
 
   api:
@@ -99,6 +100,14 @@ services:
       context: app
       dockerfile: Dockerfile
       target: production
+      args:
+        - NEXT_PUBLIC_API_PROTOCOL=${NEXT_PUBLIC_API_PROTOCOL}
+        - NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST}
+        - NEXT_PUBLIC_API_PORT=${NEXT_PUBLIC_API_PORT}
+    environment:
+      - NEXT_PUBLIC_API_PROTOCOL=${NEXT_PUBLIC_API_PROTOCOL}
+      - NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST}
+      - NEXT_PUBLIC_API_PORT=${NEXT_PUBLIC_API_PORT}
     depends_on:
       - api
     restart: always

@@ -9,6 +9,17 @@ const nextConfig = {
   //     : 'development_value',
   // },
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: process.env.NEXT_PUBLIC_API_PROTOCOL,
+        hostname: process.env.NEXT_PUBLIC_API_HOST,
+        port: process.env.NEXT_PUBLIC_API_PORT,
+        pathname: "/media/**",
+      },
+    ],
+  },
+
   // Function to modify webpack configuration - allows to customize the build process
   webpack: (config, { dev, isServer }) => {
     config.devtool = dev ? "eval-source-map" : "source-map";
@@ -26,7 +37,6 @@ const nextConfig = {
   //   locales: ['pl', 'en'],
   //   defaultLocale: 'en',
   // },
-
   poweredByHeader: false, // Disable "X-Powered-By: Next.js" header
 };
 

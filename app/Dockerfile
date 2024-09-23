@@ -32,8 +32,15 @@ CMD [ "yarn", "dev" ]
 
 ######################### BUILDER ################################
 FROM base AS builder
+# Args
+ARG NEXT_PUBLIC_API_PROTOCOL
+ARG NEXT_PUBLIC_API_HOST
+ARG NEXT_PUBLIC_API_PORT
 # Set production environment
 ENV NODE_ENV=production
+ENV NEXT_PUBLIC_API_PROTOCOL=${NEXT_PUBLIC_API_PROTOCOL}
+ENV NEXT_PUBLIC_API_HOST=${NEXT_PUBLIC_API_HOST}
+ENV NEXT_PUBLIC_API_PORT=${NEXT_PUBLIC_API_PORT}
 # Set working directory
 WORKDIR /app
 # Copy node_modules from deps stage
