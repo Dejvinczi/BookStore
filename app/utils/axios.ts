@@ -1,4 +1,5 @@
 import axios from "axios";
+import camelcaseKeys from "camelcase-keys";
 
 const API_URL =
   `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${process.env.NEXT_PUBLIC_API_HOST}:${process.env.NEXT_PUBLIC_API_PORT}/api` ||
@@ -17,6 +18,18 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  function (response) {
+    if (response.data && typeof response.data === "object") {
+      response.data = camelcaseKeys(response.data, { deep: true });
+    }
+    return response;
   },
   function (error) {
     return Promise.reject(error);
