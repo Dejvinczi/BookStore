@@ -1,5 +1,6 @@
 import axios from "axios";
 import camelcaseKeys from "camelcase-keys";
+import { getToken, storeToken, removeTokens } from "./token";
 
 const API_URL =
   `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${process.env.NEXT_PUBLIC_API_HOST}:${process.env.NEXT_PUBLIC_API_PORT}/api` ||
@@ -7,31 +8,52 @@ const API_URL =
 
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 1000,
   headers: { "Content-Type": "application/json" },
 });
 
-api.interceptors.request.use(
-  function (config) {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
+api.interceptors.request.use((config) => {
+  const accessToken = getToken("access");
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
   }
-);
+  return config;
+});
 
 api.interceptors.response.use(
-  function (response) {
+  (response) => {
     if (response.data && typeof response.data === "object") {
       response.data = camelcaseKeys(response.data, { deep: true });
     }
     return response;
   },
-  function (error) {
+  async (error) => {
+    const originalRequest = error.config;
+    if (
+      error.response.status === 401 &&
+      error.response.data.detail === "Token is invalid or expired" &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
+
+      try {
+        const refreshToken = getToken("refresh");
+        const response = await api.post("/login/refresh", {
+          refresh: refreshToken,
+        });
+
+        const { access, refresh } = response.data;
+
+        storeToken(access, "access");
+        storeToken(refresh, "refresh");
+
+        originalRequest.headers["Authorization"] = `Bearer ${access}`;
+        return api(originalRequest);
+      } catch (refreshError) {
+        removeTokens();
+        window.location.href = "/login";
+        return Promise.reject(error);
+      }
+    }
     return Promise.reject(error);
   }
 );
