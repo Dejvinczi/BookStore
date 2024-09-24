@@ -30,7 +30,7 @@ api.interceptors.response.use(
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&
-      error.response.data.detail === "Token is invalid or expired" &&
+      error.response.data.detail !== "No active account found with the given credentials" &&
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
