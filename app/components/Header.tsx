@@ -1,46 +1,71 @@
-import Image from "next/image";
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function Header() {
+  const { user, logout } = useAuth();
+
   return (
-    <header className='py-4 px-4 bg-cream-50 shadow-md'>
-      <div className='container mx-auto flex flex-col sm:flex-row items-center justify-between'>
-        <Link href='/' className='flex items-center mb-4 sm:mb-0'>
-          <Image
-            src='/android-chrome-512x512.png'
-            alt='Logo'
-            width={26}
-            height={26}
-            className='mr-2'
-          />
-          <h1 className='text-2xl font-bold text-azure-700'>BookStore</h1>
-        </Link>
+    <header className='bg-primary text-text shadow-md'>
+      <nav className='container mx-auto px-4 py-4'>
+        <div className='flex flex-wrap justify-between items-center'>
+          <Link
+            href='/'
+            className='flex items-center text-2xl font-bold hover:text-accent'
+          >
+            <Image
+              src='/android-chrome-512x512.png'
+              alt='Logo'
+              width={22}
+              height={22}
+              className='mr-1'
+            />
+            BookStore
+          </Link>
 
-        <nav className='flex space-x-4 sm:space-x-8 mb-4 sm:mb-0'>
-          <Link
-            href='/books'
-            className='text-lg text-stone-600 hover:text-azure-500 transition duration-300'
-          >
-            Books
-          </Link>
-          <Link
-            href='/authors'
-            className='text-lg text-stone-600 hover:text-azure-500 transition duration-300'
-          >
-            Authors
-          </Link>
-          <Link
-            href='/genres'
-            className='text-lg text-stone-600 hover:text-azure-500 transition duration-300'
-          >
-            Genres
-          </Link>
-        </nav>
+          <div className='flex items-center space-x-2'>
+            <Link href='/books' className='hover:text-accent transition-colors'>
+              Books
+            </Link>
+          </div>
 
-        <button className='bg-azure-500 hover:bg-azure-700 text-white font-bold py-2 px-4 rounded transition duration-300'>
-          Sign In
-        </button>
-      </div>
+          <div className='flex items-center space-x-2'>
+            {user ? (
+              <>
+                <Link
+                  href='/profile'
+                  className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={logout}
+                  className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href='/login'
+                  className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
+                >
+                  Login
+                </Link>
+                <Link
+                  href='/register'
+                  className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
+                >
+                  Register
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
     </header>
   );
 }
