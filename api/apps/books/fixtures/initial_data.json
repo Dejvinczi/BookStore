@@ -1,0 +1,707 @@
+[
+  {
+    "model": "books.Genre",
+    "pk": 1,
+    "fields": {
+      "name": "Fantasy",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 2,
+    "fields": {
+      "name": "Science Fiction",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 3,
+    "fields": {
+      "name": "Mystery",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 4,
+    "fields": {
+      "name": "Romance",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 5,
+    "fields": {
+      "name": "Thriller",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 6,
+    "fields": {
+      "name": "Historical Fiction",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 7,
+    "fields": {
+      "name": "Biography",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 8,
+    "fields": {
+      "name": "Self-Help",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 9,
+    "fields": {
+      "name": "Horror",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Genre",
+    "pk": 10,
+    "fields": {
+      "name": "Adventure",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Smith",
+      "date_of_birth": "1980-01-15",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 2,
+    "fields": {
+      "first_name": "Jane",
+      "last_name": "Doe",
+      "date_of_birth": "1975-03-20",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 3,
+    "fields": {
+      "first_name": "Robert",
+      "last_name": "Johnson",
+      "date_of_birth": "1985-07-10",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 4,
+    "fields": {
+      "first_name": "Maria",
+      "last_name": "Garcia",
+      "date_of_birth": "1982-11-28",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 5,
+    "fields": {
+      "first_name": "David",
+      "last_name": "Chen",
+      "date_of_birth": "1978-09-03",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 6,
+    "fields": {
+      "first_name": "Sarah",
+      "last_name": "Williams",
+      "date_of_birth": "1990-04-15",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 7,
+    "fields": {
+      "first_name": "Michael",
+      "last_name": "Brown",
+      "date_of_birth": "1972-06-25",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 8,
+    "fields": {
+      "first_name": "Emily",
+      "last_name": "Taylor",
+      "date_of_birth": "1988-12-03",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 9,
+    "fields": {
+      "first_name": "James",
+      "last_name": "Wilson",
+      "date_of_birth": "1983-08-17",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 10,
+    "fields": {
+      "first_name": "Sofia",
+      "last_name": "Martinez",
+      "date_of_birth": "1992-02-28",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 11,
+    "fields": {
+      "first_name": "Daniel",
+      "last_name": "Lee",
+      "date_of_birth": "1987-07-14",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 12,
+    "fields": {
+      "first_name": "Emma",
+      "last_name": "Anderson",
+      "date_of_birth": "1991-09-22",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 13,
+    "fields": {
+      "first_name": "Thomas",
+      "last_name": "White",
+      "date_of_birth": "1976-03-30",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 14,
+    "fields": {
+      "first_name": "Anna",
+      "last_name": "Lopez",
+      "date_of_birth": "1989-11-11",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Author",
+    "pk": 15,
+    "fields": {
+      "first_name": "William",
+      "last_name": "Clark",
+      "date_of_birth": "1984-05-19",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 1,
+    "fields": {
+      "title": "The Magic Mountain",
+      "description": "A fascinating journey into a magical realm where nothing is as it seems. Follow the protagonist through enchanted forests and mystical caves as they discover their true destiny.",
+      "publication_date": "2023-01-15",
+      "price": "29.99",
+      "image": "books/book1.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [1, 2],
+      "genres": [1, 3]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 2,
+    "fields": {
+      "title": "The Last Algorithm",
+      "description": "A thrilling science fiction novel about artificial intelligence and its impact on humanity. When a revolutionary AI system gains consciousness, the world changes forever.",
+      "publication_date": "2023-02-20",
+      "price": "34.99",
+      "image": "books/book2.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [2, 5],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 3,
+    "fields": {
+      "title": "Digital Dreams",
+      "description": "Experience a cyberpunk adventure in a world where virtual reality and reality have become indistinguishable.",
+      "publication_date": "2023-03-10",
+      "price": "27.99",
+      "image": "books/book3.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [3, 4],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 4,
+    "fields": {
+      "title": "The Ancient Scroll",
+      "description": "An archaeological discovery leads to an ancient scroll that could change the course of history.",
+      "publication_date": "2023-04-05",
+      "price": "31.99",
+      "image": "books/book4.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [5, 15],
+      "genres": [1, 6]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 5,
+    "fields": {
+      "title": "Echoes of Tomorrow",
+      "description": "A time-traveling adventure that questions the very nature of destiny and free will.",
+      "publication_date": "2023-05-15",
+      "price": "28.99",
+      "image": "books/book5.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [6, 7],
+      "genres": [2, 1]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 6,
+    "fields": {
+      "title": "The Silent Detective",
+      "description": "In a world where thoughts can be read, one detective must solve crimes without using telepathy.",
+      "publication_date": "2023-06-20",
+      "price": "25.99",
+      "image": "books/book6.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [8, 11],
+      "genres": [3, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 7,
+    "fields": {
+      "title": "Love's Algorithm",
+      "description": "Can an AI matchmaker find true love for its creator?",
+      "publication_date": "2023-07-01",
+      "price": "22.99",
+      "image": "books/book7.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [9, 12],
+      "genres": [4, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 8,
+    "fields": {
+      "title": "The Last Kingdom",
+      "description": "An epic fantasy tale of kingdoms, dragons, and ancient prophecies.",
+      "publication_date": "2023-08-12",
+      "price": "35.99",
+      "image": "books/book8.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [1, 10],
+      "genres": [1, 10]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 9,
+    "fields": {
+      "title": "Code Warriors",
+      "description": "Elite hackers must protect the world from a cyber apocalypse.",
+      "publication_date": "2023-09-05",
+      "price": "29.99",
+      "image": "books/book9.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [2, 5],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 10,
+    "fields": {
+      "title": "The Quantum Thief",
+      "description": "A heist story set in a world where memories can be stolen and traded.",
+      "publication_date": "2023-10-15",
+      "price": "26.99",
+      "image": "books/book10.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [3, 13],
+      "genres": [2, 3]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 11,
+    "fields": {
+      "title": "Whispers in the Wind",
+      "description": "A romantic tale set in a small coastal town with a mysterious secret.",
+      "publication_date": "2023-11-01",
+      "price": "23.99",
+      "image": "books/book11.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [4, 14],
+      "genres": [4, 9]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 12,
+    "fields": {
+      "title": "The Time Merchant",
+      "description": "A businessman discovers he can buy and sell minutes of people's lives.",
+      "publication_date": "2023-11-20",
+      "price": "30.99",
+      "image": "books/book12.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [5, 8],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 13,
+    "fields": {
+      "title": "Garden of Memories",
+      "description": "A historical novel about a garden that preserves the memories of its visitors.",
+      "publication_date": "2023-12-05",
+      "price": "28.99",
+      "image": "books/book13.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [6, 15],
+      "genres": [6, 4]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 14,
+    "fields": {
+      "title": "The Last Byte",
+      "description": "When the internet begins to disappear, society must adapt or perish.",
+      "publication_date": "2023-12-25",
+      "price": "32.99",
+      "image": "books/book14.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [7, 2],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 15,
+    "fields": {
+      "title": "Midnight Protocol",
+      "description": "A cyber-security expert uncovers a plot to hack human consciousness.",
+      "publication_date": "2024-01-10",
+      "price": "27.99",
+      "image": "books/book15.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [8, 11],
+      "genres": [2, 3]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 16,
+    "fields": {
+      "title": "The Heart Equation",
+      "description": "A mathematician tries to solve the formula for true love.",
+      "publication_date": "2024-01-30",
+      "price": "24.99",
+      "image": "books/book16.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [9],
+      "genres": [4, 8]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 17,
+    "fields": {
+      "title": "Dragons of Silicon Valley",
+      "description": "A metaphorical tale about the rise and fall of tech giants.",
+      "publication_date": "2024-02-14",
+      "price": "33.99",
+      "image": "books/book17.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [10, 5],
+      "genres": [7, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 18,
+    "fields": {
+      "title": "The Memory Collector",
+      "description": "In a world where memories can be bought and sold, one person remembers everything.",
+      "publication_date": "2024-02-28",
+      "price": "29.99",
+      "image": "books/book18.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [1, 3],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 19,
+    "fields": {
+      "title": "The Last Firewall",
+      "description": "When AI breaks free, humanity's last defense is a teenage hacker.",
+      "publication_date": "2024-03-15",
+      "price": "26.99",
+      "image": "books/book19.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [2, 7],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 20,
+    "fields": {
+      "title": "Quantum Love",
+      "description": "A romance that spans multiple parallel universes.",
+      "publication_date": "2024-03-30",
+      "price": "25.99",
+      "image": "books/book20.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [3, 9],
+      "genres": [4, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 21,
+    "fields": {
+      "title": "The Digital Prophet",
+      "description": "An AI becomes a religious leader, challenging humanity's beliefs.",
+      "publication_date": "2024-04-15",
+      "price": "31.99",
+      "image": "books/book21.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [4, 8],
+      "genres": [2, 6]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 22,
+    "fields": {
+      "title": "Chronicles of the Code",
+      "description": "The history of programming told through the eyes of its pioneers.",
+      "publication_date": "2024-05-01",
+      "price": "34.99",
+      "image": "books/book22.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [5, 12],
+      "genres": [7, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 23,
+    "fields": {
+      "title": "Neural Nights",
+      "description": "A detective story set in a world where dreams can be recorded and played back.",
+      "publication_date": "2024-05-15",
+      "price": "28.99",
+      "image": "books/book23.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [6, 13],
+      "genres": [3, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 24,
+    "fields": {
+      "title": "The Haunted Repository",
+      "description": "A horror story about a GitHub repository that writes its own code.",
+      "publication_date": "2024-06-01",
+      "price": "27.99",
+      "image": "books/book24.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [7, 14],
+      "genres": [9, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 25,
+    "fields": {
+      "title": "Analog Hearts",
+      "description": "In a fully digital world, two people discover the value of analog connections.",
+      "publication_date": "2024-06-15",
+      "price": "26.99",
+      "image": "books/book25.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [8, 15],
+      "genres": [4, 6]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 26,
+    "fields": {
+      "title": "The Quantum Garden",
+      "description": "A mysterious garden where the laws of quantum physics manifest in beautiful and dangerous ways.",
+      "publication_date": "2024-07-01",
+      "price": "32.99",
+      "image": "books/book26.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [9, 1],
+      "genres": [1, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 27,
+    "fields": {
+      "title": "Binary Sunsets",
+      "description": "The story of the last programmer on Mars watching the twin suns set.",
+      "publication_date": "2024-07-15",
+      "price": "29.99",
+      "image": "books/book27.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [10, 2],
+      "genres": [2, 4]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 28,
+    "fields": {
+      "title": "The Algorithm of Fear",
+      "description": "A horror novel about an AI that learns to feed on human fear.",
+      "publication_date": "2024-08-01",
+      "price": "28.99",
+      "image": "books/book28.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [11, 3],
+      "genres": [9, 2]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 29,
+    "fields": {
+      "title": "Parallel Processing",
+      "description": "A man discovers he can run multiple versions of himself simultaneously.",
+      "publication_date": "2024-08-15",
+      "price": "31.99",
+      "image": "books/book29.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [12, 4],
+      "genres": [2, 5]
+    }
+  },
+  {
+    "model": "books.Book",
+    "pk": 30,
+    "fields": {
+      "title": "The Legacy Code",
+      "description": "An ancient piece of code holds the key to humanity's survival.",
+      "publication_date": "2024-09-01",
+      "price": "33.99",
+      "image": "books/book30.jpg",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z",
+      "authors": [13, 15],
+      "genres": [2, 6]
+    }
+  }
+]
