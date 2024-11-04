@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   const { user, logout } = useAuth();
@@ -26,7 +26,10 @@ export default function Header() {
           </Link>
 
           <div className='flex items-center space-x-2'>
-            <Link href='/books' className='hover:text-accent transition-colors'>
+            <Link
+              href='/books'
+              className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
+            >
               Books
             </Link>
           </div>
@@ -35,10 +38,10 @@ export default function Header() {
             {user ? (
               <>
                 <Link
-                  href='/profile'
+                  href='/cart'
                   className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
                 >
-                  Profile
+                  Cart
                 </Link>
                 <button
                   onClick={logout}
