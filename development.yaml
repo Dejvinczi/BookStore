@@ -1,4 +1,4 @@
-name: "bookstore-dev"
+name: 'bookstore-dev'
 
 services:
   api:
@@ -6,7 +6,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: development
-    entrypoint: ["entrypoint-development.sh"]
+    entrypoint: ['entrypoint-development.sh']
     environment:
       - DJANGO_SUPERUSER_USERNAME=${DJANGO_SUPERUSER_USERNAME}
       - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
@@ -29,8 +29,8 @@ services:
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_USER_PASSWORD=${DATABASE_USER_PASSWORD}
     ports:
-      - "8000:8000"
-      - "5678:5678"
+      - '8000:8000'
+      - '5678:5678'
     volumes:
       - ./api/config:/api/config
       - ./api/apps:/api/apps
@@ -50,7 +50,7 @@ services:
       context: api
       dockerfile: Dockerfile
       target: development
-    entrypoint: ["entrypoint-celery-worker.sh"]
+    entrypoint: ['entrypoint-celery-worker.sh']
     volumes:
       - ./api/config:/api/config
       - ./api/apps:/api/apps
@@ -74,7 +74,7 @@ services:
       - EMAIL_USE_TLS=${EMAIL_USE_TLS}
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}   
+      - DEFAULT_FROM_EMAIL=${DEFAULT_FROM_EMAIL}
       - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_PORT=${DATABASE_PORT}
       - DATABASE_NAME=${DATABASE_NAME}
@@ -94,7 +94,7 @@ services:
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_USER_PASSWORD}
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - db-data:/var/lib/postgresql/data
 
@@ -104,7 +104,7 @@ services:
       dockerfile: Dockerfile
       target: development
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - /app/node_modules
       - /app/.next
