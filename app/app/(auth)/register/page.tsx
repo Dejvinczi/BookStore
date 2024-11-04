@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/hooks/useAuth";
+import { Button } from "@/components/shared/Button";
 import { Form } from "@/components/shared/Form";
 import { Input } from "@/components/shared/Input";
-import { Button } from "@/components/shared/Button";
+import { useAuth } from "@/hooks/useAuth";
+import { ApiError } from "@/types/api";
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 interface FormErrors {
   email?: string;
@@ -35,12 +36,13 @@ export default function RegisterPage() {
     try {
       await register(email, username, password);
       router.push("/login");
-    } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        if (error.response.data.detail) {
-          setErrors({ general: error.response.data.detail });
+    } catch (error) {
+      const err = error as ApiError;
+      if (err.response && err.response.status === 400) {
+        if (err.response.data.detail) {
+          setErrors({ general: err.response.data.detail });
         } else {
-          setErrors(error.response.data);
+          setErrors(err.response.data as FormErrors);
         }
       } else {
         setErrors({
