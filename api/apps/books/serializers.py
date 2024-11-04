@@ -14,9 +14,7 @@ class BaseAuthorSerializer(serializers.ModelSerializer):
     def validate_date_of_birth(self, value):
         """Validation of date of birth."""
         if value > timezone.now().date():
-            raise serializers.ValidationError(
-                {"date_of_birth": _("Date cannot be in the future.")}
-            )
+            raise serializers.ValidationError(_("Date cannot be in the future."))
         return value
 
 
@@ -52,17 +50,13 @@ class BaseBookSerializer(serializers.ModelSerializer):
     def validate_publication_date(self, value):
         """Validation of publication date."""
         if value > timezone.now().date():
-            raise serializers.ValidationError(
-                {"publication_date": _("Date cannot be in the future.")}
-            )
+            raise serializers.ValidationError("Date cannot be in the future.")
         return value
 
     def validate_price(self, value):
         """Validation of price."""
         if value <= 0:
-            raise serializers.ValidationError(
-                {"price": _("Price must be a positive value.")}
-            )
+            raise serializers.ValidationError("Price must be a positive value.")
         return value
 
 
