@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Wait for a db service to be available
-if ! wait-for-it.sh ${DATABASE_HOST}:${DATABASE_PORT} --timeout=30 --strict --; 
+if ! wait-for-it.sh ${DATABASE_HOST}:${DATABASE_PORT} --timeout=30 --strict --;
 then
   echo "Database did not start in time. Exiting."
   exit 1
@@ -22,6 +22,16 @@ elif [[ "$output" == *"Superuser created successfully."* ]]; then
 else
     echo "$output"
     exit 1
+fi
+
+# Check if books exist in database
+book_count=$(python manage.py shell -c "from apps.books.models import Book; print(Book.objects.count())")
+
+if [ "$book_count" -eq 0 ]; then
+    echo "No books found in database. Loading initial data..."
+    python manage.py loadbookinitialdata
+else
+    echo "Books already exist in database. Skipping initial data load."
 fi
 
 # Collect static files
