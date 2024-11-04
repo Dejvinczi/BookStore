@@ -22,9 +22,6 @@ RUN mkdir -p ./media ./static \
 # Install base Python dependencies
 RUN pip install --no-cache-dir -r ./requirements/base.txt
 
-# Create non-root user
-RUN adduser --disabled-password --no-create-home api-user
-
 # Set default port
 EXPOSE 8000
 
@@ -51,12 +48,12 @@ RUN chmod -R +x ./scripts
 # Expose debugger port
 EXPOSE 5678
 
-# Set ownership and switch to non-root user
-RUN chown -R api-user:api-user /api
-USER api-user
-
 # Update PATH with scripts directory
 ENV PATH="$PATH:/api/scripts"
+
+# Set ownership and switch to non-root user
+RUN adduser --disabled-password --no-create-home api-user
+RUN chown -R api-user:api-user /api
 
 # Set entrypoint
 ENTRYPOINT ["entrypoint-development.sh"]
@@ -79,16 +76,16 @@ RUN pip install --no-cache-dir -r ./requirements/testing.txt
 
 # Copy and set up scripts
 COPY scripts/entrypoint-testing.sh ./scripts/entrypoint-testing.sh
-COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh 
+COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh
 COPY scripts/wait-for-it.sh ./scripts/wait-for-it.sh
 RUN chmod -R +x ./scripts
 
-# Set ownership and switch to non-root user
-RUN chown -R api-user:api-user /api
-USER api-user
-
 # Update PATH with scripts directory
 ENV PATH="$PATH:/api/scripts"
+
+# Set ownership and switch to non-root user
+RUN adduser --disabled-password --no-create-home api-user
+RUN chown -R api-user:api-user /api
 
 # Set entrypoint
 ENTRYPOINT ["entrypoint-testing.sh"]
@@ -111,16 +108,16 @@ RUN pip install -r ./requirements/production.txt
 
 # Copy and set up scripts
 COPY scripts/entrypoint-production.sh ./scripts/entrypoint-production.sh
-COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh 
+COPY scripts/entrypoint-celery-worker.sh ./scripts/entrypoint-celery-worker.sh
 COPY scripts/wait-for-it.sh ./scripts/wait-for-it.sh
 RUN chmod -R +x ./scripts
 
-# Set ownership and switch to non-root user
-RUN chown -R api-user:api-user /api
-USER api-user
-
 # Update PATH with scripts directory
 ENV PATH="$PATH:/api/scripts"
+
+# Set ownership and switch to non-root user
+RUN adduser --disabled-password --no-create-home api-user
+RUN chown -R api-user:api-user /api
 
 # Set entrypoint
 ENTRYPOINT ["entrypoint-production.sh"]
