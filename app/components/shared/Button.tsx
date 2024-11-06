@@ -6,14 +6,28 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   fullWidth = false,
   className = "",
+  disabled,
   ...props
 }) => {
   return (
     <button
-      className={`py-2 font-semibold rounded-md bg-accent text-primary hover:bg-secondary hover:text-accent focus:ring-4 focus:ring-primary ${fullWidth ? "w-full" : ""} ${className}`}
+      disabled={disabled}
+      className={`
+        py-2 px-4
+        font-semibold
+        rounded-md
+        transition-colors
+        ${fullWidth ? "w-full" : ""}
+        ${
+          disabled
+            ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+            : "bg-accent text-primary hover:bg-secondary hover:text-accent focus:ring-4 focus:ring-primary"
+        }
+        ${className}
+      `}
       {...props}
     >
-      {children}
+      <span className='flex items-center justify-center gap-2'>{children}</span>
     </button>
   );
 };
