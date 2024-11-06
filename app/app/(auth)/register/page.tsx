@@ -56,7 +56,6 @@ export default function RegisterPage() {
   return (
     <Form title='Create your account' onSubmit={handleSubmit}>
       <Input
-        label='Email address'
         id='email-address'
         name='email'
         type='email'
@@ -68,7 +67,6 @@ export default function RegisterPage() {
         error={errors.email}
       />
       <Input
-        label='Username'
         id='username'
         name='username'
         type='username'
@@ -80,7 +78,6 @@ export default function RegisterPage() {
         error={errors.username}
       />
       <Input
-        label='Password'
         id='password'
         name='password'
         type='password'
@@ -92,7 +89,6 @@ export default function RegisterPage() {
         error={errors.password}
       />
       <Input
-        label='Confirm Password'
         id='confirm-password'
         name='confirm-password'
         type='password'

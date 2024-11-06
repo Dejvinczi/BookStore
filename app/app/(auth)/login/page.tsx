@@ -51,7 +51,6 @@ export default function LoginPage() {
   return (
     <Form title='Sign in to your account' onSubmit={handleSubmit}>
       <Input
-        label='Username'
         id='username'
         name='username'
         type='text'
@@ -63,7 +62,6 @@ export default function LoginPage() {
         error={errors.username}
       />
       <Input
-        label='Password'
         id='password'
         name='password'
         type='password'
