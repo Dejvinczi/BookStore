@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.db.models import Prefetch
 from rest_framework import generics, mixins, viewsets, status
 from rest_framework.response import Response
 from .models import Cart, CartItem
@@ -14,8 +15,7 @@ class CartAPIView(mixins.RetrieveModelMixin, generics.GenericAPIView):
     """View for the user cart."""
 
     queryset = Cart.objects.prefetch_related(
-        "items",
-        "items__book",
+        Prefetch("items", queryset=CartItem.objects.select_related("book")),
         "items__book__authors",
         "items__book__genres",
     ).all()
