@@ -1,6 +1,6 @@
-import { AuthProvider } from "@/contexts/AuthContext";
-import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import { AuthProvider } from "@/contexts/AuthContext";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 
@@ -16,12 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='bg-secondary text-light flex flex-col min-h-screen'>
+      <body className='flex flex-col min-h-screen bg-secondary text-light'>
         <AuthProvider>
           <Header />
-          <main className='flex-grow container mx-auto px-4 py-8'>
-            {children}
-          </main>
+          <main className='flex-1 flex flex-col px-6 py-6'>{children}</main>
           <Footer />
         </AuthProvider>
       </body>

@@ -8,8 +8,8 @@ export default function Header() {
   const { user, logout } = useAuth();
 
   return (
-    <header className='bg-primary text-text shadow-md'>
-      <nav className='container mx-auto px-4 py-4'>
+    <header className='bg-primary'>
+      <nav className='container mx-auto py-4'>
         <div className='flex flex-wrap justify-between items-center'>
           <Link
             href='/'
@@ -30,7 +30,7 @@ export default function Header() {
               href='/books'
               className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
             >
-              Books
+              BOOKS
             </Link>
           </div>
 
@@ -41,13 +41,13 @@ export default function Header() {
                   href='/cart'
                   className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
                 >
-                  Cart
+                  CART
                 </Link>
                 <button
                   onClick={logout}
                   className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
                 >
-                  Logout
+                  LOGOUT
                 </button>
               </>
             ) : (
@@ -56,13 +56,13 @@ export default function Header() {
                   href='/login'
                   className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
                 >
-                  Login
+                  LOGIN
                 </Link>
                 <Link
                   href='/register'
                   className='text-accent hover:bg-secondary hover:text-accent px-4 py-1 rounded transition-colors font-bold'
                 >
-                  Register
+                  REGISTER
                 </Link>
               </>
             )}
