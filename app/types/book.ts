@@ -20,7 +20,7 @@ export interface BookApiResponse {
   count: number;
   previous: string | null;
   next: string | null;
-  results: Book[];
+  results: Array<Book>;
 }
 
 export interface BookDetailApiResponse extends BookDetail {}
