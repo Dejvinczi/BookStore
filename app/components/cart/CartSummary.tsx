@@ -2,19 +2,16 @@
 
 import { Button } from "@/components/shared/Button";
 import { Input } from "@/components/shared/Input";
+import { Cart } from "@/types/cart";
 import api from "@/utils/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface CartSummaryProps {
-  totalPrice: number;
-  isEmptyCart: boolean;
+  cart: Cart;
 }
 
-export const CartSummary: React.FC<CartSummaryProps> = ({
-  totalPrice,
-  isEmptyCart,
-}) => {
+export const CartSummary: React.FC<CartSummaryProps> = ({ cart }) => {
   const [address, setAddress] = useState("");
   const router = useRouter();
 
@@ -41,16 +38,16 @@ export const CartSummary: React.FC<CartSummaryProps> = ({
         id='address'
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        disabled={isEmptyCart}
+        disabled={!cart.items.length}
       />
       <div className='flex justify-between items-center'>
         <span className='text-lg font-bold text-light'>
-          Total: {totalPrice}
+          Total: {cart.totalPrice}
         </span>
         <Button
           type='submit'
           className='font-bold py-2 px-4 rounded-lg transition duration-300'
-          disabled={isEmptyCart}
+          disabled={!cart.items.length}
         >
           Submit Order
         </Button>

@@ -2,11 +2,12 @@
 
 import { CartItemList } from "@/components/cart/CartItemList";
 import { CartSummary } from "@/components/cart/CartSummary";
+import { Cart } from "@/types/cart";
 import api from "@/utils/axios";
 import { useEffect, useState } from "react";
 
 export default function CartPage() {
-  const [cart, setCart] = useState<{ items: []; totalPrice: number }>({
+  const [cart, setCart] = useState<Cart>({
     items: [],
     totalPrice: 0,
   });
@@ -38,15 +39,12 @@ export default function CartPage() {
         <div className='grid grid-cols-3 gap-4 w-full'>
           <div className='col-span-2 flex flex-col rounded-xl p-4 bg-primary'>
             <CartItemList
-              items={cart.items}
+              cartItems={cart.items}
               changeQuantity={handleChangeQuantity}
             />
           </div>
           <div className='flex flex-col rounded-xl p-4 bg-primary'>
-            <CartSummary
-              totalPrice={cart.totalPrice}
-              isEmptyCart={!cart.items.length}
-            />
+            <CartSummary cart={cart} />
           </div>
         </div>
       </div>

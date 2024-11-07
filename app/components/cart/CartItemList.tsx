@@ -1,19 +1,24 @@
+import { CartItem } from "@/types/cart";
 import React from "react";
-import CartItemCard, { CartItemCardProps } from "./CartItem";
+import CartItemCard from "./CartItem";
 
-type CartItemListProps = {
-  items: CartItemCardProps[];
+interface CartItemListProps {
+  cartItems: Array<CartItem>;
   changeQuantity: (id: number, quantity: number) => void;
-};
+}
 
 export const CartItemList: React.FC<CartItemListProps> = ({
-  items,
+  cartItems,
   changeQuantity,
 }) => {
   return (
     <div className='flex flex-col gap-4'>
-      {items.map((item) => (
-        <CartItemCard key={item.id} {...item} changeQuantity={changeQuantity} />
+      {cartItems.map((cartItem) => (
+        <CartItemCard
+          key={cartItem.id}
+          cartItem={cartItem}
+          changeQuantity={changeQuantity}
+        />
       ))}
     </div>
   );
