@@ -6,7 +6,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "BookStore",
-  description: "Your favorite online bookstore",
+  description: "Your favorite online BookStore",
 };
 
 export default function RootLayout({
@@ -16,10 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en'>
-      <body className='flex flex-col min-h-screen bg-secondary text-light'>
+      <body className='flex flex-col flex-1 min-h-screen max-h-screen bg-secondary text-light'>
         <AuthProvider>
           <Header />
-          <main className='flex-1 flex flex-col px-6 py-6'>{children}</main>
+          <main className='flex flex-col flex-1 px-6 py-6'>{children}</main>
           <Footer />
         </AuthProvider>
       </body>
