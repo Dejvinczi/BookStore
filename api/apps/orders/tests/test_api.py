@@ -104,10 +104,12 @@ class TestOrderViewSet:
         email = mailoutbox[0]
 
         assert email.subject == f"Order {order.no} changed status"
-        assert (
-            email.body
-            == f"Hello {user.username},\n\nYour order {order.no} has changed status to: {order.status}"
-        )
+        expected_body = f"""\
+        Hello {user.username},
+
+        Your order {order.no} has changed status to: {order.status}\
+        """
+        assert email.body == expected_body
         assert email.from_email == settings.DEFAULT_FROM_EMAIL
         assert email.to == [user.email]
 

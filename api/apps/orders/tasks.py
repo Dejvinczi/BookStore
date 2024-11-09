@@ -16,7 +16,11 @@ def send_order_change_status_email(order_id):
         user = order.user
         recipient = user.email
         subject = f"Order {order.no} changed status"
-        message = f"Hello {user.username},\n\nYour order {order.no} has changed status to: {order.status}"
+        message = f"""\
+        Hello {user.username},
+
+        Your order {order.no} has changed status to: {order.status}\
+        """
         from_email = settings.DEFAULT_FROM_EMAIL
 
         send_mail(subject, message, from_email, [recipient])
@@ -29,6 +33,7 @@ def send_order_change_status_email(order_id):
 
     except Exception as exc:
         logger.error(
-            f"An error occurred while sending the email with order {order.no}: {str(exc)}"
+            f"An error occurred while sending the email with order "
+            f"{order.no}: {str(exc)}"
         )
         send_order_change_status_email.retry(exc=exc, countdown=60, max_retries=3)

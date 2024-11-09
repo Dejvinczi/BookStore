@@ -1,4 +1,4 @@
-from .base import *  # NOQA
+from .base import *
 
 INSTALLED_APPS += [
     "django_extensions",
@@ -19,19 +19,14 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 ROOT_URLCONF = "config.urls.development"
 
-REST_FRAMEWORK.update(
-    {
-        "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-        "DEFAULT_AUTHENTICATION_CLASSES": REST_FRAMEWORK[
-            "DEFAULT_AUTHENTICATION_CLASSES"
-        ]
-        + ["rest_framework.authentication.SessionAuthentication"],
-        "DEFAULT_RENDERER_CLASSES": REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"]
-        + ["rest_framework.renderers.BrowsableAPIRenderer"],
-        "DEFAULT_PARSER_CLASSES": REST_FRAMEWORK["DEFAULT_PARSER_CLASSES"]
-        + ["rest_framework.parsers.MultiPartParser"],
-    },
-)
+REST_FRAMEWORK["DEFAULT_SCHEMA_CLASS"] = "drf_spectacular.openapi.AutoSchema"
+REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"] += [
+    "rest_framework.authentication.SessionAuthentication"
+]
+REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] += [
+    "rest_framework.renderers.BrowsableAPIRenderer"
+]
+REST_FRAMEWORK["DEFAULT_PARSER_CLASSES"] += ["rest_framework.parsers.MultiPartParser"]
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Book Store API",

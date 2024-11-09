@@ -15,15 +15,19 @@ def test_send_order_change_status_email_success(
     mock_order_objects.select_related.return_value.get.return_value = mock_order
 
     send_order_change_status_email(mock_order.id)
-
     mock_send_mail.assert_called_once_with(
         f"Order {mock_order.no} changed status",
-        f"Hello {mock_user.username},\n\nYour order {mock_order.no} has changed status to: {mock_order.status}",
+        f"""\
+        Hello {mock_user.username},
+
+        Your order {mock_order.no} has changed status to: {mock_order.status}\
+        """,
         settings.DEFAULT_FROM_EMAIL,
         [mock_user.email],
     )
     mock_logger.info.assert_called_once_with(
-        f"The email with order {mock_order.no} status changed was sent to {mock_user.email}."
+        f"The email with order {mock_order.no} status changed was sent to "
+        f"{mock_user.email}."
     )
 
 
@@ -63,7 +67,8 @@ def test_send_order_change_status_email_unexpected_exception(
     send_order_change_status_email(mock_order.id)
 
     mock_logger.error.assert_called_once_with(
-        f"An error occurred while sending the email with order {mock_order.no}: {exception_msg}"
+        f"An error occurred while sending the email with order "
+        f"{mock_order.no}: {exception_msg}"
     )
     mock_retry.assert_called_once_with(
         exc=mock_send_mail.side_effect, countdown=60, max_retries=3

@@ -176,7 +176,9 @@ class TestAuthorViewSet:
         assert response.status_code == status.HTTP_403_FORBIDDEN
 
     def test_part_update_not_as_admin_fail(self, auth_api_client, author):
-        """Test that an author can't be partially updated for users that are not admin."""
+        """
+        Test that an author can't be partially updated for users that are not admin.
+        """
         response = auth_api_client.patch(
             self._get_book_detail_url(author.id), {}, format="json"
         )

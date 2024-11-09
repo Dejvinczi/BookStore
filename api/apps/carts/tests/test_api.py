@@ -75,13 +75,12 @@ class TestCartItemViewSet:
         assert cart_item.quantity == 1
 
     def test_create_existing_cart_item_success(
-        self,
-        user,
-        auth_api_client,
-        book_factory,
-        cart_item_factory,
+        self, user, auth_api_client, book_factory, cart_item_factory
     ):
-        """Test that a user can create a new cart item (add to cart existing book - increment quantity)."""
+        """
+        Test that a user can create a new cart item (add to cart existingbook -
+        increment quantity).
+        """
 
         cart = user.cart
         book = book_factory()
@@ -131,7 +130,9 @@ class TestCartItemViewSet:
         book_factory,
         cart_item_factory,
     ):
-        """Test that a user cannot update the quantity of an existing cart item to zero."""
+        """
+        Test that a user cannot update the quantity of an existing cart item to zero.
+        """
 
         cart = user.cart
         book = book_factory()

@@ -31,7 +31,10 @@ class TestRegisterView:
         assert user.cart is not None
 
     def test_register_user_existing_username_fail(self, api_client, auth_user_model):
-        """Test that registering a user with an existing username fails and returns a 400 status code."""
+        """
+        Test that registering a user with an existing username fails and returns a 400
+        status code.
+        """
         payload = {
             "username": "testuser",
             "password": "testpassword",
@@ -75,7 +78,10 @@ class TestLoginView:
         assert access_token_obj["user_id"] == user.id
 
     def test_login_user_invalid_credentials_fail(self, api_client, auth_user_model):
-        """Test that logging in with invalid credentials fails and returns a 401 status code."""
+        """
+        Test that logging in with invalid credentials fails and returns a 401 status
+        code.
+        """
         user_data = {
             "username": "testuser",
             "password": "testpassword",
@@ -121,7 +127,9 @@ class TestLoginRefreshView:
         assert access_token_obj["user_id"] == user.id
 
     def test_login_refresh_user_invalid_token_fail(self, api_client, auth_user_model):
-        """Test that logging in with an invalid token fails and returns a 401 status code."""
+        """
+        Test that logging in with an invalid token fails and returns a 401 status code.
+        """
         payload = {"refresh": "invalidtoken"}
 
         response = api_client.post(self.LOGIN_REFRESH_URL, payload, format="json")
@@ -151,7 +159,10 @@ class TestLogoutView:
         assert response.status_code == status.HTTP_200_OK
 
     def test_logout_with_blacklisted_token_fail(self, api_client, auth_user_model):
-        """Test that logging out with a blacklisted token fails and returns a 401 status code."""
+        """
+        Test that logging out with a blacklisted token fails and returns a 401 status
+        code.
+        """
         user_data = {
             "username": "testuser",
             "password": "testpassword",
