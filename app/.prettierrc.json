@@ -1,7 +1,17 @@
 {
-  "trailingComma": "es5",
   "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
   "tabWidth": 2,
-  "singleQuote": false,
-  "jsxSingleQuote": true
+  "useTabs": false,
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "printWidth": 120,
+  "endOfLine": "lf",
+  "jsxSingleQuote": false,
+  "quoteProps": "as-needed",
+  "htmlWhitespaceSensitivity": "css",
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": false
 }
