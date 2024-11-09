@@ -1,9 +1,10 @@
 "use client";
 
-import React, { createContext, useState, useEffect, useCallback } from "react";
-import { getToken, storeToken, removeTokens, decodeToken } from "@/utils/token";
 import { User } from "@/types/user";
 import api from "@/utils/axios";
+import { decodeToken, getToken, removeTokens, storeToken } from "@/utils/token";
+import { useRouter } from "next/navigation";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 interface AuthContextType {
   user: User | null;
@@ -24,6 +25,8 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   const checkLoginStatus = useCallback(async () => {
     setLoading(true);
@@ -69,6 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     removeTokens();
     setUser(null);
+    router.push("/");
   };
 
   const refresh = async () => {
