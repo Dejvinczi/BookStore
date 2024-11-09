@@ -1,5 +1,5 @@
-import { Author } from "./author";
-import { Genre } from "./genre";
+import { Author } from './author';
+import { Genre } from './genre';
 
 export interface Book {
   id: number;
@@ -11,7 +11,7 @@ export interface Book {
   price: string;
 }
 
-export interface BookDetail extends Omit<Book, "authors" | "genres"> {
+export interface BookDetail extends Omit<Book, 'authors' | 'genres'> {
   authors: Author[];
   genres: Genre[];
 }

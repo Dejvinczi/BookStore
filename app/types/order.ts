@@ -1,4 +1,4 @@
-import { Book } from "@/types/book";
+import { Book } from '@/types/book';
 
 export interface Order {
   id: number;

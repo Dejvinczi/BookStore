@@ -6,13 +6,7 @@ interface PaginationProps {
   hasPrevious: boolean;
 }
 
-export function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-  hasNext,
-  hasPrevious,
-}: PaginationProps) {
+const Pagination = ({ currentPage, totalPages, onPageChange, hasNext, hasPrevious }: PaginationProps) => {
   const getPageNumbers = () => {
     const pages = [];
     const showEllipsisStart = currentPage > 3;
@@ -25,19 +19,15 @@ export function Pagination({
     pages.push(1);
 
     if (showEllipsisStart) {
-      pages.push("ellipsis");
+      pages.push('ellipsis');
     }
 
-    for (
-      let i = Math.max(2, currentPage - 1);
-      i <= Math.min(currentPage + 1, totalPages - 1);
-      i++
-    ) {
+    for (let i = Math.max(2, currentPage - 1); i <= Math.min(currentPage + 1, totalPages - 1); i++) {
       pages.push(i);
     }
 
     if (showEllipsisEnd) {
-      pages.push("ellipsis");
+      pages.push('ellipsis');
     }
 
     if (totalPages > 1) {
@@ -48,20 +38,20 @@ export function Pagination({
   };
 
   return (
-    <div className='flex justify-center items-center gap-2 mt-8'>
+    <div className="flex justify-center items-center gap-2 mt-8">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={!hasPrevious}
-        className='bg-primary border-2 border-accent text-accent hover:bg-secondary disabled:opacity-50 disabled:hover:bg-primary font-bold py-2 px-4 rounded-lg transition duration-300'
+        className="bg-primary border-2 border-accent text-accent hover:bg-secondary disabled:opacity-50 disabled:hover:bg-primary font-bold py-2 px-4 rounded-lg transition duration-300"
       >
         Previous
       </button>
 
-      <div className='flex gap-2'>
+      <div className="flex gap-2">
         {getPageNumbers().map((page) => (
           <>
-            {page === "ellipsis" ? (
-              <span className='text-accent font-bold px-3 py-2'>...</span>
+            {page === 'ellipsis' ? (
+              <span className="text-accent font-bold px-3 py-2">...</span>
             ) : (
               <button
                 onClick={() => onPageChange(Number(page))}
@@ -69,8 +59,8 @@ export function Pagination({
                   w-10 h-10 rounded-lg font-bold transition duration-300
                   ${
                     currentPage === page
-                      ? "bg-accent text-primary border-2 border-accent"
-                      : "bg-primary border-2 border-accent text-accent hover:bg-secondary"
+                      ? 'bg-accent text-primary border-2 border-accent'
+                      : 'bg-primary border-2 border-accent text-accent hover:bg-secondary'
                   }
                 `}
               >
@@ -84,10 +74,12 @@ export function Pagination({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={!hasNext}
-        className='bg-primary border-2 border-accent text-accent hover:bg-secondary disabled:opacity-50 disabled:hover:bg-primary font-bold py-2 px-4 rounded-lg transition duration-300'
+        className="bg-primary border-2 border-accent text-accent hover:bg-secondary disabled:opacity-50 disabled:hover:bg-primary font-bold py-2 px-4 rounded-lg transition duration-300"
       >
         Next
       </button>
     </div>
   );
-}
+};
+
+export default Pagination;

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: process.env.NODE_ENV === "production" ? "standalone" : undefined,
+  output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
   reactStrictMode: true,
 
   // Defines of envs available on client side
@@ -16,14 +16,14 @@ const nextConfig = {
         protocol: process.env.NEXT_PUBLIC_API_PROTOCOL,
         hostname: process.env.NEXT_PUBLIC_API_HOST,
         port: process.env.NEXT_PUBLIC_API_PORT,
-        pathname: "/media/**",
+        pathname: '/media/**',
       },
     ],
   },
 
   // Function to modify webpack configuration - allows to customize the build process
   webpack: (config, { dev, isServer }) => {
-    config.devtool = dev ? "eval-source-map" : "source-map";
+    config.devtool = dev ? 'eval-source-map' : 'source-map';
 
     // Place for additional webpack config modifications
     if (!isServer) {

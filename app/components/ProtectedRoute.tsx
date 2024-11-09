@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function ProtectedRoute({
-  children,
-}: {
+interface ProtectedRouteProps {
   children: React.ReactNode;
-}) {
+}
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login");
+      router.push('/login');
     }
   }, [user, loading, router]);
 
@@ -23,4 +23,6 @@ export default function ProtectedRoute({
   }
 
   return user ? <>{children}</> : null;
-}
+};
+
+export default ProtectedRoute;

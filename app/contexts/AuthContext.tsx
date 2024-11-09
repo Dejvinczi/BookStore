@@ -1,26 +1,20 @@
-"use client";
+'use client';
 
-import { User } from "@/types/user";
-import api from "@/utils/axios";
-import { decodeToken, getToken, removeTokens, storeToken } from "@/utils/token";
-import { useRouter } from "next/navigation";
-import React, { createContext, useCallback, useEffect, useState } from "react";
+import { User } from '@/types/user';
+import api from '@/utils/axios';
+import { decodeToken, getToken, removeTokens, storeToken } from '@/utils/token';
+import { useRouter } from 'next/navigation';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  register: (
-    email: string,
-    username: string,
-    password: string
-  ) => Promise<void>;
+  register: (email: string, username: string, password: string) => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const checkLoginStatus = useCallback(async () => {
     setLoading(true);
-    const access = getToken("access");
+    const access = getToken('access');
     if (access) {
       const { user_id } = decodeToken(access);
       setUser({ id: user_id });
@@ -47,9 +41,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (username: string, password: string) => {
     setLoading(true);
     try {
-      const response = await api.post("/login", { username, password });
-      storeToken("access", response.data.access);
-      storeToken("refresh", response.data.refresh);
+      const response = await api.post('/login', { username, password });
+      storeToken('access', response.data.access);
+      storeToken('refresh', response.data.refresh);
 
       const { user_id } = decodeToken(response.data.access);
       setUser({ id: user_id });
@@ -60,53 +54,45 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     setLoading(true);
-    const refresh = getToken("refresh");
+    const refresh = getToken('refresh');
     if (refresh) {
       try {
-        await api.post("/logout", { refresh });
+        await api.post('/logout', { refresh });
       } catch (error) {
-        console.error("Logout failed", error);
+        console.error('Logout failed', error);
       } finally {
         setLoading(false);
       }
     }
     removeTokens();
     setUser(null);
-    router.push("/");
+    router.push('/');
   };
 
   const refresh = async () => {
     setLoading(true);
-    const refresh = getToken("refresh");
+    const refresh = getToken('refresh');
     if (refresh) {
       try {
-        const response = await api.post("/login/refresh", { refresh });
-        storeToken("access", response.data.access);
-        storeToken("refresh", response.data.refresh);
+        const response = await api.post('/login/refresh', { refresh });
+        storeToken('access', response.data.access);
+        storeToken('refresh', response.data.refresh);
       } catch (error) {
-        console.error("Refresh failed", error);
+        console.error('Refresh failed', error);
       } finally {
         setLoading(false);
       }
     }
   };
 
-  const register = async (
-    email: string,
-    username: string,
-    password: string
-  ) => {
+  const register = async (email: string, username: string, password: string) => {
     setLoading(true);
     try {
-      await api.post("/register", { email, username, password });
+      await api.post('/register', { email, username, password });
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <AuthContext.Provider value={{ user, loading, login, logout, register }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, loading, login, logout, register }}>{children}</AuthContext.Provider>;
 }
