@@ -2,6 +2,12 @@
 
 BookStore is a comprehensive web application for an online bookstore, serving as both a consolidation of my current web development knowledge and a platform for exploring new technologies and practices. This project represents a culmination of my skills while also pushing the boundaries of my expertise into new areas.
 
+## Screenshots
+![Register Page](screenshots/register-page.png)
+![SignIn Page](screenshots/signin-page.png)
+![Books Page](screenshots/books-page.png)
+![Cart Page](screenshots/cart-page.png)
+![Orders Page](screenshots/orders-page.png)
 
 ## Table of Contents
 - [Features](#features)
@@ -50,13 +56,13 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    git clone https://github.com/dejvinczi/bookstore.git
    cd bookstore
    ```
-2. Create .env file from .env.template and edit it:
+2. Create .env file from .env.template and edit it. (**🚨IMPORTANT** - There is no proxy server in the development environment - it exists only in the test and production environment. If you want to make queries to the API in the development environment, you need to set **NEXT_PUBLIC_API_PORT=8000** pointing directly to the Django server.
    ```
    cp .env.template .env
    ```
 
 3. Build the Docker containers (choose one of the following as appropriate):
-   
+
    3.1. Development composition:
    ```
    docker-compose -f development.yaml build
@@ -76,20 +82,29 @@ BookStore is a comprehensive web application for an online bookstore, serving as
    cd bookstore
    ```
 
-3. Run the Docker containers (choose one of the following as appropriate):
-   
-   3.1. Development composition:
+2. Run the Docker containers (choose one of the following as appropriate):
+
+   2.1. Development composition:
    ```
    docker-compose -f development.yaml up
    ```
-   3.2. Testing composition:
+   2.2. Testing composition:
    ```
    docker-compose -f testing.yaml up
    ```
-   3.3. Production composition:
+   2.3. Production composition:
    ```
    docker-compose -f production.yaml up
    ```
+
+3. Navigate your browser to url:
+
+   3.1. Development composition:
+   - Frontend: http://localhost:3000
+   - Backend: http://localhost:8000
+
+   3.2. Production composition:
+   - http://localhost:1337
 
 ## Testing
 
@@ -103,7 +118,7 @@ You can run tests with coverage using `pytest` on the testing server:
 
 2. Run docker testing composition:
    ```
-   docker-compose -f testing.yaml up 
+   docker-compose -f testing.yaml up
    ```
 
 3. In another terminal run the following command:
@@ -115,6 +130,6 @@ You can run tests with coverage using `pytest` on the testing server:
 ## API Documentation
 
 API documentation is available when the development server is running at:
-1. Swagger:  `http://localhost:8000/api/schema/swagger-ui/` 
+1. Swagger:  `http://localhost:8000/api/schema/swagger-ui/`
 2. Redoc:  `http://localhost:8000/api/schema/redoc/`
 3. JSON:  `http://localhost:8000/api/schema/`
